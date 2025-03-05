@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+
+.gra{
+  font-family: "Work Sans", sans-serif;
+}
+body{
+  @apply bg-[#14181C];
+}
+.intr{
+  font-family: 'Playfair Display', serif;
+  font-weight: 900; /* Adjust size */
+  letter-spacing: 0.5px; /* Slight spacing */
+}
