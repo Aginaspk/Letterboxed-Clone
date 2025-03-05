@@ -5,7 +5,7 @@ import { FaAndroid, FaApple } from 'react-icons/fa'
 function Intro() {
     const { isNavHover } = useSelector(state => state.globState)
     return (
-        <div className='w-full flex flex-col items-center xl:relative xl:h-screen'>
+        <div className='w-full flex flex-col items-center xl:relative xl:h-screen xl:mb-[64px]'>
             <div className='xl:w-[1200px] w-full xl:h-[600px] overflow-hidden relative'>
                 <div className={`absolute hidden xl:block inset-x-0 top-0 ${isNavHover ? 'h-2/12' : 'h-1/12'} bg-gradient-to-b from-[#14181C] via-[#14181c80] to-transparent`}></div>
                 <div className="absolute inset-x-0 bottom-0 h-1/2 xl:h-1/3 bg-gradient-to-t from-[#14181C] via-[#14181c80] to-transparent"></div>
