@@ -5,7 +5,7 @@ import { IoCalendarClearSharp, IoEyeSharp, IoGridSharp, IoMenuSharp } from 'reac
 
 function Guide() {
   return (
-    <div className='w-full grid grid-cols-3 gap-2 '>
+    <div className='w-full grid grid-cols-3 gap-2 mb-[10px] pb-10 '>
         <div className='flex relative shadow-[inset_0_1px_0_hsla(0,0%,100%,0.1)] bg-[#445566]  hover:bg-[#00C030] text-[#DDEEFF] text-[14px] font-medium gra px-5 py-4.5 rounded-sm justify-center items-center'>
             <IoEyeSharp size={45} className=' absolute left-5 top-5'/>
             <h1 className='ml-[65px] pt-[5px]'>Keep track of every film you’ve ever watched (or just start from the day you join)</h1>
