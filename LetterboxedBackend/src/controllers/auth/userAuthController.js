@@ -41,9 +41,27 @@ const userRegister = async (req, res, next) => {
   });
   await newUser.save();
 
+  const accessToken = generateAccessToken(newUser);
+  const refreshToken = generateRefreshToken(newUser);
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
   res.status(200).json({
     status: "success",
     message: "user registered successfully",
+    refreshToken,
+    accessToken,
+    user:{userName,email}
   });
 };
 
@@ -87,6 +105,7 @@ const userLogin = async (req, res, next) => {
     message: "user logged in successfully",
     accessToken,
     refreshToken,
+    user:{userName:userData.userName,email:userData.email}
   });
 };
 
@@ -113,15 +132,15 @@ const refreshUserToken = async (req, res) => {
   res.status(201).json({ message: "accesstoken Reffreshed" });
 };
 
-const protecte = async(req, res) => {
-    const token = req.cookies.accessToken;
-    if (!token) return res.status(401).json({ message: "No token" });
+const protecte = async (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json({ message: "No token" });
 
-    jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
-        if (err) return res.status(403).json({ message: "Invalid token" });
+  jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
 
-        res.json({ message: "Protected data", userId: decoded.id });
-    });
+    res.json({ message: "Protected data", userId: decoded.id });
+  });
 };
 
-export { userRegister, userLogin, refreshUserToken,protecte };
+export { userRegister, userLogin, refreshUserToken, protecte };

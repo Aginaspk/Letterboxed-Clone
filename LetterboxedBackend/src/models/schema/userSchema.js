@@ -8,8 +8,8 @@ const userSchema = mongoose.Schema(
     profilePic: { type: String, default: "" },
     bio: { type: String, default: "" },
     isAdmin: { type: Boolean, default: false },
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
   },
   { timestamps: true }
 );
