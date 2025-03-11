@@ -14,42 +14,38 @@ const getNewReviews = async (req, res) => {
   });
 };
 
-// 
-const getPopularOfTheWeek = async (req, res) => {
-  try {
-    const currentDate = new Date();
 
-    // Start of the week (7 days before today at 00:00:00 UTC)
+const getPopularOfTheWeek = async (req, res) => {
+
+    const currentDate = new Date();
     const startOfWeek = new Date(currentDate);
     startOfWeek.setUTCDate(currentDate.getUTCDate() - 7);
     startOfWeek.setUTCHours(0, 0, 0, 0);
-
-    // End of the week (today at 23:59:59 UTC)
     const endOfWeek = new Date(currentDate);
     endOfWeek.setUTCHours(23, 59, 59, 999);
 
-    // Correct model usage and date comparison
-    const popularReviews = await reviewSchema.aggregate([
-      {
-        $match: {
-          createdAt: { 
-            $gte: startOfWeek, 
-            $lte: endOfWeek 
-          },
-        },
+    console.log("Start of Week:", startOfWeek.toISOString());
+    console.log("End of Week:", endOfWeek.toISOString());
+
+
+    const popularReviews = await reviewSchema.find({
+      $expr: {
+        $and: [
+          { $gte: [{ $toDate: "$createdAt" }, startOfWeek] },
+          { $lte: [{ $toDate: "$createdAt" }, endOfWeek] },
+        ],
       },
-      // { $addFields: { likeCount: { $size: "$likes" } } },
-      // { $sort: { likeCount: -1 } },
-      // { $limit: 6 },
-    ]);
+    })
+      .sort({ "likes.length": -1 })
+      .limit(6)
+      .populate("user","userName email")
+      .populate("movie","title releaseYear smallPoster");
 
     res.status(200).json({
       message: "success",
       data: popularReviews,
     });
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching data", error: error.message });
-  }
+ 
 };
 
-export { getNewReviews,getPopularOfTheWeek };
+export { getNewReviews, getPopularOfTheWeek };
