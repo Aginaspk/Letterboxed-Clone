@@ -6,8 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllMovies, getOscarsMovies } from '../redux/movieSlice'
 import PosterCard from '../components/PosterCard'
 import { Link } from 'react-router-dom'
-import { getNewReviews } from '../redux/reviewSlice'
+import { getNewReviews, getPopularReviews } from '../redux/reviewSlice'
 import ReviewCard from '../components/ReviewCard'
+import Box from '@mui/material/Box';
+import Masonry from '@mui/lab/Masonry';
+import PopularReviewCard from '../components/PopularReviewCard'
 
 function Home() {
   const dispatch = useDispatch();
@@ -15,13 +18,16 @@ function Home() {
   const { movies, oscars } = useSelector(state => state.movies)
   const { isAuth, user } = useSelector(state => state.auth)
   const { newReviews } = useSelector(state => state.review)
+  const { popularReviews } = useSelector(state => state.review)
 
-  console.log(newReviews)
+
+  console.log(popularReviews)
 
   useEffect(() => {
     dispatch(getAllMovies())
     dispatch(getOscarsMovies())
     dispatch(getNewReviews())
+    dispatch(getPopularReviews())
   }, [dispatch])
 
 
@@ -41,7 +47,7 @@ function Home() {
               })}
             </div>
             <img className='w-full mb-[40px]' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741588121/pro-950_qrg5h9.png" alt="" />
-            </>}
+          </>}
           <h1 className={`${!isAuth && 'hidden'} w-full pb-[5px] border-b mb-[10px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra ${!isAuth && "hidden"}`}>POPULAR ON LETTERBOXD</h1>
 
           <div className='grid grid-cols-6 gap-2 pb-[40px]'>
@@ -58,8 +64,20 @@ function Home() {
               return <PosterCard key={item._id} item={item} />
             })}
           </div>
-          <p className='mb-2.5 mt-2 text-[#99AABB] text-[15px] gra'>The nominees for Best Motion Picture of the Year at the 97th Academy Awards, hosted on March 2, 2025. Follow the <Link className='text-[#DDEEFF]' to={"https://www.oscars.org/"}>Oscars</Link>.</p>
+          <p className='mb-2.5 mt-2 text-[#99AABB] text-[15px] pb-[64px] gra'>The nominees for Best Motion Picture of the Year at the 97th Academy Awards, hosted on March 2, 2025. Follow the <Link className='text-[#DDEEFF]' to={"https://www.oscars.org/"}>Oscars</Link>.</p>
 
+
+          <div>
+            <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>POPULAR REVIEWS THIS WEEK</h1>
+
+            <Box sx={{ width: "100%",  minHeight: 393   }}>
+              <Masonry columns={2} spacing={3}  >
+                {popularReviews?.data?.map((item) => (
+                  <PopularReviewCard item={item} key={item._id} />
+                ))}
+              </Masonry>
+            </Box>
+          </div>
         </div>
       </div>
     </div>

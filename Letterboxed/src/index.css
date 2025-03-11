@@ -11,3 +11,6 @@
   font-weight: 900; /* Adjust size */
   letter-spacing: 0.5px; /* Slight spacing */
 }
+.lora{
+  font-family: "Lora", serif;
+}
