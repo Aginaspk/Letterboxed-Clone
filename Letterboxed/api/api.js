@@ -15,9 +15,6 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const { data } = await api.get("/authUser/reffresh");
-
-        store.dispatch(updateAccessToken(data.accessToken));
-
         return api(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);

@@ -14,21 +14,17 @@ const getNewReviews = async (req, res) => {
   });
 };
 
-
 const getPopularOfTheWeek = async (req, res) => {
-
-    const currentDate = new Date();
-    const startOfWeek = new Date(currentDate);
-    startOfWeek.setUTCDate(currentDate.getUTCDate() - 7);
-    startOfWeek.setUTCHours(0, 0, 0, 0);
-    const endOfWeek = new Date(currentDate);
-    endOfWeek.setUTCHours(23, 59, 59, 999);
-
-    console.log("Start of Week:", startOfWeek.toISOString());
-    console.log("End of Week:", endOfWeek.toISOString());
+  const currentDate = new Date();
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setUTCDate(currentDate.getUTCDate() - 7);
+  startOfWeek.setUTCHours(0, 0, 0, 0);
+  const endOfWeek = new Date(currentDate);
+  endOfWeek.setUTCHours(23, 59, 59, 999);
 
 
-    const popularReviews = await reviewSchema.find({
+  const popularReviews = await reviewSchema
+    .find({
       $expr: {
         $and: [
           { $gte: [{ $toDate: "$createdAt" }, startOfWeek] },
@@ -36,16 +32,15 @@ const getPopularOfTheWeek = async (req, res) => {
         ],
       },
     })
-      .sort({ "likes.length": -1 })
-      .limit(6)
-      .populate("user","userName email")
-      .populate("movie","title releaseYear smallPoster");
+    .sort({ likes: -1 })
+    .limit(6)
+    .populate("user", "userName email")
+    .populate("movie", "title releaseYear smallPoster");
 
-    res.status(200).json({
-      message: "success",
-      data: popularReviews,
-    });
- 
+  res.status(200).json({
+    message: "success",
+    data: popularReviews,
+  });
 };
 
 export { getNewReviews, getPopularOfTheWeek };

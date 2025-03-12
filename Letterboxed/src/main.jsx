@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Home from './pages/Home.jsx'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.js'
+import Prote from './pages/Prote.jsx'
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <Home />
       }
     ]
+  },
+  {
+    path:'/pro',
+    element:<Prote/>
   }
 ])
 

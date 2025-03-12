@@ -10,12 +10,12 @@ import user from "../../models/schema/userSchema.js";
 // TokenGenaration
 const generateAccessToken = (userData) =>
   jwt.sign({ id: userData._id }, process.env.ACCESS_SECRET, {
-    expiresIn: "60s",
+    expiresIn: "15s",
   });
 
 const generateRefreshToken = (userData) =>
   jwt.sign({ id: userData._id }, process.env.REFRESH_SECRET, {
-    expiresIn: "7d",
+    expiresIn: "30s",
   });
 
 // Registeration

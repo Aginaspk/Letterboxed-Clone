@@ -19,9 +19,12 @@ function Home() {
   const { isAuth, user } = useSelector(state => state.auth)
   const { newReviews } = useSelector(state => state.review)
   const { popularReviews } = useSelector(state => state.review)
+  const sortedReviews = [...(popularReviews?.data || [])].sort((a, b) => {
+    return b.reviewText.length - a.reviewText.length;
+  });
 
 
-  console.log(popularReviews)
+  console.log(sortedReviews)
 
   useEffect(() => {
     dispatch(getAllMovies())
@@ -68,15 +71,19 @@ function Home() {
 
 
           <div>
-            <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>POPULAR REVIEWS THIS WEEK</h1>
+            <div className={`${!isAuth && 'w-[630px]'}`}>
+              <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>POPULAR REVIEWS THIS WEEK</h1>
 
-            <Box sx={{ width: "100%",  minHeight: 393   }}>
-              <Masonry columns={2} spacing={3}  >
-                {popularReviews?.data?.map((item) => (
-                  <PopularReviewCard item={item} key={item._id} />
-                ))}
-              </Masonry>
-            </Box>
+              <Box sx={{ width: "100%", minHeight: 393 }}>
+                <Masonry columns={isAuth ? 2 : 1} spacing={3}  >
+                  {isAuth ? (sortedReviews?.map((item) => (
+                    <PopularReviewCard item={item} key={item._id} />
+                  ))) : (popularReviews?.data?.map((item) => (
+                    <PopularReviewCard item={item} key={item._id} />
+                  )))}
+                </Masonry>
+              </Box>
+            </div>
           </div>
         </div>
       </div>

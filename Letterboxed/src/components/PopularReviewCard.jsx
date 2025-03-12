@@ -11,13 +11,14 @@ function PopularReviewCard({ item }) {
     return (
         <div className='border-b border-[#2C3440] pb-5 mx-[16px] mb-[32px]'>
             <div className='flex gap-5 mb-5'>
-                <div className='h-[120px] w-[80px] shadow-[rgba(20,24,28,0.25)_0px_0px_1px_1px_inset] border-[#FFEEDD]'>
-                    <img className='h-full w-full ' src={item?.movie?.smallPoster} alt="" /></div>
+                <div className='h-[120px] w-[80px] shadow-[rgba(20,24,28,0.25)_0px_0px_1px_1px_inset] border-[#FFEEDD] hover:border-2 hover:border-white hover:rounded-sm '>
+                    <img className='h-full w-full rounded-sm' src={item?.movie?.smallPoster} alt="" /></div>
                 <div className='flex items-end'>
                     <div className='flex flex-col items-start gap-1.5' >
                         <div className='flex justify-center items-center gap-[6px]'>
-                            <div className='h-[24px] w-[24px] rounded-full overflow-hidden border border-[#99AABB] shadow-[0_0_2px_rgba(0,0,0,0.2)] '>
-                                <img src="https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png" className='w-full h-full' alt="" />
+                            <div className='h-[24px] w-[24px] rounded-full overflow-hidden  border-[#99AABB] shadow-[0_0_2px_rgba(0,0,0,0.2)] '>
+                                <img src="https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png" className='w-full h-full ' alt="" />
+                                
                             </div>
                             <h1 className='text-[12px] pb-[1px] text-[#AABBCC] font-bold'>{item?.user?.userName}</h1>
                         </div>
