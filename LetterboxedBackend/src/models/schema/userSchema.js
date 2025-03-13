@@ -10,9 +10,10 @@ const userSchema = mongoose.Schema(
     isAdmin: { type: Boolean, default: false },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   { timestamps: true }
 );
 
-
-export default mongoose.model('users',userSchema)
+export default mongoose.model("users", userSchema);
