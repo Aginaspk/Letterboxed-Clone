@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { LuX } from 'react-icons/lu'
 import { useDispatch } from 'react-redux'
 import { loginUser } from './authSlice';
+import { Link } from 'react-router-dom';
 
 function Login({ closeLogin }) {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Login({ closeLogin }) {
         <div>
           <div className='flex justify-between'>
             <h1 className='text-[12px] text-[#667788]'>Password</h1>
-            <h1 className='text-[11px] text-[#00e050] hover:text-white cursor-pointer tracking-wide'>Forgotten?</h1>
+            <Link to={'/reset-password'}><h1 className='text-[11px] text-[#00e050] hover:text-white cursor-pointer tracking-wide'>Forgotten?</h1></Link>
           </div>
           <input className='w-[150px] h-[28px] bg-[#2C3440] py-[5px] px-[5px] text-sm focus:text-[#2C3440] rounded-sm focus:bg-white' type="password"
             name="password"

@@ -39,6 +39,20 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const sendResetEmail = createAsyncThunk(
+  "auth/sendResetEmail",
+  async (email, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post("authUser/forgot-password", email);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: INITIAL_STATE,
@@ -74,6 +88,12 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(sendResetEmail.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(sendResetEmail.fulfilled, (state) => {
+        state.loading = false;
       })
   },
 });
