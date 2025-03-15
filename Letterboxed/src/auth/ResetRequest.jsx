@@ -19,7 +19,8 @@ function ResetRequest() {
     const handleResetEmail = async () => {
         try {
             const res = await dispatch(sendResetEmail(email)).unwrap();
-            setIsSend(true)
+            alert("password chnaged successfully")
+            navigate('/')
         } catch (error) {
             alert(error)
         }

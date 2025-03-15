@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { LuX } from 'react-icons/lu'
 import { useDispatch } from 'react-redux'
 import { registerUser } from './authSlice'
+import toast from 'react-hot-toast'
 
 function Register({ isOpen, onClose }) {
     const dispatch = useDispatch()
@@ -11,6 +12,17 @@ function Register({ isOpen, onClose }) {
         email: "",
         password: ""
     })
+    const [checkedItems, setCheckedItems] = useState({
+        isSixteen: false,
+        isPAP: false
+    });
+    const handleChange = (event) => {
+        const { name, checked } = event.target;
+        setCheckedItems((prev) => ({
+          ...prev,
+          [name]: checked,
+        }));
+      };
 
     const getUserInfo = (e) => {
         setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
@@ -19,11 +31,11 @@ function Register({ isOpen, onClose }) {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const res = await dispatch(registerUser(userInfo)).unwrap();
-            alert("success")
+            const data = {...userInfo,...checkedItems}
+            const res = await dispatch(registerUser(data)).unwrap();
             onClose();
         } catch (error) {
-            alert(error)
+            toast.success(error)
         }
     }
 
@@ -36,7 +48,7 @@ function Register({ isOpen, onClose }) {
                 </form>
                 <div className='w-[420px] px-[36px] py-[25px]'>
                     <h1 className='text-[#99AABB] mb-5 text-[15px] gra'>JOIN LETTERBOXD</h1>
-                    <form action=""  onSubmit={handleRegister}>
+                    <form action="" onSubmit={handleRegister}>
                         <div className='w-full mb-[15px]'>
                             <h1 className='mb-[5px] text-[12px] antialiased tracking-wider font-[600]'>Email address</h1>
                             <input className='w-full px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#CCDDEE] h-[35px]'
@@ -61,11 +73,11 @@ function Register({ isOpen, onClose }) {
                                 onChange={getUserInfo} />
                         </div>
                         <div className='flex w-full relative mb-[15px]'>
-                            <input type="checkbox" className=" absolute checkbox rounded-[2px] w-5 h-5 bg-[#cde] checked:bg-[#cde] checked:text-[#567] " />
+                            <input type="checkbox" name='isSixteen' onChange={handleChange} className=" absolute checkbox rounded-[2px] w-5 h-5 bg-[#cde] checked:bg-[#cde] checked:text-[#567] " />
                             <p className='text-sm gra pl-[30px] mb-[5px] text-[#BBCCDD]'>I’m at least 16 years old and accept the Terms and Use</p>
                         </div>
                         <div className='flex w-full relative mb-[15px]'>
-                            <input type="checkbox" className="absolute checkbox rounded-[2px] w-5 h-5 bg-[#cde] checked:bg-[#cde] checked:text-[#567] " />
+                            <input type="checkbox" name='isPAP' onChange={handleChange} className="absolute checkbox rounded-[2px] w-5 h-5 bg-[#cde] checked:bg-[#cde] checked:text-[#567] " />
                             <p className='text-sm gra pl-[30px] mb-[5px] text-[#BBCCDD]'>I accept the Privacy Policy  and consent to the processing of my personal information in accordance with it.</p>
                         </div>
                         <div className='w-full'>

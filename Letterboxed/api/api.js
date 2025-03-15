@@ -17,6 +17,9 @@ api.interceptors.response.use(
         const { data } = await api.get("/authUser/reffresh");
         return api(originalRequest);
       } catch (refreshError) {
+        console.error("Refresh token expired. Logging out...");
+        const res = await api.post("/authUser/logout"); 
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }

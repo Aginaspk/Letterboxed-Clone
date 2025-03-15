@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema(
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },
+    isSixteen:{type:Boolean, required:true},
+    isPAP:{type:Boolean, required:true}
+
   },
   { timestamps: true }
 );

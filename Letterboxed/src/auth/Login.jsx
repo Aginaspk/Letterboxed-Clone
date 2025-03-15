@@ -3,6 +3,8 @@ import { LuX } from 'react-icons/lu'
 import { useDispatch } from 'react-redux'
 import { loginUser } from './authSlice';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 
 function Login({ closeLogin }) {
   const dispatch = useDispatch();
@@ -23,7 +25,8 @@ function Login({ closeLogin }) {
       alert("suucess");
       closeLogin();
     } catch (error) {
-      alert(error)
+      toast.success(error)
+     
     }
   }
   return (

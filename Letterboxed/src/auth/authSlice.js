@@ -5,6 +5,7 @@ import { persistReducer } from "redux-persist";
 
 const INITIAL_STATE = {
   user: {},
+  newPass: {},
   isAuth: false,
   accessToken: null,
   loading: false,
@@ -39,11 +40,39 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const logOutUser = createAsyncThunk(
+  "auth/logOutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get("authUser/logout");
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
 export const sendResetEmail = createAsyncThunk(
   "auth/sendResetEmail",
   async (email, { rejectWithValue }) => {
     try {
       const { data } = await api.post("authUser/forgot-password", email);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
+export const setNewPassword = createAsyncThunk(
+  "auth/setNewPassword",
+  async (val, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/authUser/reset-password/${val.token}`, val.password);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -94,6 +123,28 @@ const authSlice = createSlice({
       })
       .addCase(sendResetEmail.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(setNewPassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(setNewPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.newPass = action.payload;
+      })
+      .addCase(setNewPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(logOutUser.pending,(state)=>{
+        state.loading = true;
+      })
+      .addCase(logOutUser.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.isAuth = false;
+        state.user = {};
+      })
+      .addCase(logOutUser.rejected,(state,action)=>{
+        state.error = action.payload;
       })
   },
 });

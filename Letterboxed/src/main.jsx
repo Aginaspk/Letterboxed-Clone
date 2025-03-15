@@ -9,6 +9,7 @@ import { store } from './redux/store.js'
 import Prote from './pages/Prote.jsx'
 import ResetPass from './pages/ResetPass.jsx'
 import NewPass from './pages/NewPass.jsx'
+import { Toaster } from 'react-hot-toast'
 
 
 const router = createBrowserRouter([
@@ -21,19 +22,19 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path:'/reset-password/:token',
-        element:<NewPass/>
+        path: '/reset-password/:token',
+        element: <NewPass />
       }
-      
+
     ]
   },
   {
-    path:'/pro',
-    element:<Prote/>
+    path: '/pro',
+    element: <Prote />
   },
   {
-    path:'/reset-password',
-    element:<ResetPass/>
+    path: '/reset-password',
+    element: <ResetPass />
   }
 ])
 
@@ -41,6 +42,20 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster
+        position="top-left"
+        toastOptions={{
+          className:"font-medium w-[450px]",
+          duration:5000,
+          style: {
+            background: '#EE7000',
+            color: '#fff', 
+            border: '1px solid #e07b30',
+            padding: '5px 30px 5px 10px',
+          },
+          icon:null
+        }}
+      />
     </Provider>
   </StrictMode>,
 )

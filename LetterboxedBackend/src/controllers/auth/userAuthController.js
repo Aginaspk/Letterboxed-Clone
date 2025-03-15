@@ -1,6 +1,7 @@
 import jwt, { decode } from "jsonwebtoken";
 import bycrypt from "bcryptjs";
 import {
+  joiNewPassword,
   joiUserLogin,
   joiUserSchema,
 } from "../../models/joischema/validation.js";
@@ -13,8 +14,8 @@ import userSchema from "../../models/schema/userSchema.js";
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "aginaspk6@gmail.com",
-    pass: "rgponlnoddqnngda",
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -26,7 +27,7 @@ const generateAccessToken = (userData) =>
 
 const generateRefreshToken = (userData) =>
   jwt.sign({ id: userData._id }, process.env.REFRESH_SECRET, {
-    expiresIn: "30s",
+    expiresIn: "60s",
   });
 
 // Registeration
@@ -37,7 +38,7 @@ const userRegister = async (req, res, next) => {
     return next(new CustomError(error.details[0].message, 400));
   }
 
-  const { userName, email, password } = value;
+  const { userName, email, password, isSixteen, isPAP } = value;
   const existUser = await user.findOne({ userName });
   if (existUser) {
     return next(new CustomError("user already exist", 400));
@@ -49,6 +50,8 @@ const userRegister = async (req, res, next) => {
     userName,
     email,
     password: hashedPassword,
+    isSixteen,
+    isPAP,
   });
   await newUser.save();
 
@@ -121,7 +124,7 @@ const userLogin = async (req, res, next) => {
 };
 
 // refreshUserToken
-const refreshUserToken = async (req, res) => {
+const refreshUserToken = async (req, res, next) => {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
     return next(new CustomError("No reffresh token", 401));
@@ -209,12 +212,12 @@ const forgotPassword = async (req, res, next) => {
 // resetPassword
 const resetPassword = async (req, res, next) => {
   const { token } = req.params;
-  const value = req.body;
-  if (!value) {
-    return next(new CustomError("Enter the password", 404));
+  const { value, error } = joiNewPassword.validate(req.body);
+  if (error) {
+    return next(new CustomError(error.details[0].message, 400));
   }
 
-  const { newPassword } = value;
+  const { password } = value;
   const user = await userSchema.findOne({
     resetPasswordToken: token,
     resetPasswordExpires: { $gt: Date.now() },
@@ -223,7 +226,7 @@ const resetPassword = async (req, res, next) => {
     return next(new CustomError("invalid token", 400));
   }
   const salt = await bycrypt.genSalt(8);
-  const hashedPassword = await bycrypt.hash(newPassword, salt);
+  const hashedPassword = await bycrypt.hash(password, salt);
   user.password = hashedPassword;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
@@ -232,6 +235,22 @@ const resetPassword = async (req, res, next) => {
   res.status(200).json({
     message: "password reset successfully",
   });
+};
+
+const logoutUser = async (req, res) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
 };
 
 const protecte = async (req, res) => {
@@ -252,4 +271,5 @@ export {
   protecte,
   forgotPassword,
   resetPassword,
+  logoutUser,
 };

@@ -8,12 +8,15 @@ import { LuSearch } from 'react-icons/lu';
 import { BiSearch } from 'react-icons/bi';
 import { PiPlus } from 'react-icons/pi';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { matchPath, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { isAuth, user } = useSelector(state => state.auth)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
+  const isReset = matchPath("/reset-password/:token", location.pathname);
 
 
   const closeLogin = () => {
@@ -21,7 +24,7 @@ function Navbar() {
   }
 
   return (<>
-    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${isAuth ? 'bg-[#14181C] static' : 'bg-transparent absolute'}   top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
+    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${isAuth || isReset ? 'bg-[#14181C] static' : 'bg-transparent absolute'}   top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
       <div className='flex xl:gap-20 items-center '>
         <div className="w-[250px] h-[32px] flex items-center">
           <img className='w-full h-full object-cover' src="https://a.ltrbxd.com/logos/letterboxd-logo-h-neg-rgb.svg" alt="" />

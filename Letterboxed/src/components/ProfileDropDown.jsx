@@ -1,8 +1,20 @@
 import React, { useState } from 'react'
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { useDispatch } from 'react-redux'
+import { logOutUser } from '../auth/authSlice';
 
 function ProfileDropDown({ user }) {
+    const dispatch = useDispatch();
     const [isHover, setIsHover] = useState(false)
+
+    const signouUser = async () => {
+        try {
+            const res = await dispatch(logOutUser()).unwrap()
+            alert("success")
+        } catch (error) {
+            alert(error)
+        }
+    }
     return (
         <div className={`${isHover && "bg-[#8899AA]"} relative px-1 rounded-t-sm mt-[1px]`} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             <div className='flex w-full items-center gap-[2px] py-1.5 px-3'>
@@ -26,7 +38,7 @@ function ProfileDropDown({ user }) {
                 </div>
                 <div className='py-1 border-t border-[#2C3440]/15'>
                     <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Settings</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Sign Out</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]' onClick={signouUser}>Sign Out</p></li>
 
                 </div>
             </div>
