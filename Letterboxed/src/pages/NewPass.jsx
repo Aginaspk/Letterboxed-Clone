@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNewPassword } from '../auth/authSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function NewPass() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { token } = useParams();
     const [password, setPassword] = useState({
         password: "",
         confirmPassword: ""
     })
-    const { newPass } = useSelector(state => state.auth)
 
     const getPass = (e) => {
         setPassword({ ...password, [e.target.name]: e.target.value })
@@ -20,9 +21,10 @@ function NewPass() {
         e.preventDefault();
         try {
             const res = await dispatch(setNewPassword({password,token})).unwrap();
-            alert(newPass?.message)
+            toast.success("password changed successfully")
+            navigate('/');
         } catch (error) {
-            alert(error)
+            toast.success(error)
         }
 
     }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendResetEmail } from './authSlice';
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function ResetRequest() {
     const dispatch = useDispatch();
@@ -19,10 +20,9 @@ function ResetRequest() {
     const handleResetEmail = async () => {
         try {
             const res = await dispatch(sendResetEmail(email)).unwrap();
-            alert("password chnaged successfully")
-            navigate('/')
+            setIsSend(true)
         } catch (error) {
-            alert(error)
+            toast.success(error)
         }
     }
     return (

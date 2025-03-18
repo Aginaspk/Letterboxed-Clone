@@ -39,7 +39,7 @@ function PopularReviewCard({ item }) {
                     <div className='text-[17px] lora pb-2.5  text-[#99AABB]'>
                         {isExpanded ? item?.reviewText : item?.reviewText.slice(0, isMax)}
                         {item?.reviewText.length > isMax && !isExpanded && <span>...</span>}
-                        {!isExpanded && <span className={`text-[#DDEEFF] lora ${item?.reviewText.length <= isMax && 'hidden'}`} onClick={() => setIsExpanded(true)}>more</span>}
+                        {!isExpanded && <span className={`text-[#DDEEFF] lora cursor-pointer ${item?.reviewText.length <= isMax && 'hidden'}`} onClick={() => setIsExpanded(true)}>more</span>}
                     </div>
                     <div className='flex'>
                         <TiHeart size={20} className='text-[#778899] mr-1' />

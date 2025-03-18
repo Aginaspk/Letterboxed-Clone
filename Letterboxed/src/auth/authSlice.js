@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from "../../api/api";
+import api from "../api/api";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
@@ -44,7 +44,7 @@ export const logOutUser = createAsyncThunk(
   "auth/logOutUser",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await api.get("authUser/logout");
+      const { data } = await api.get("/authUser/logout");
       return data;
     } catch (error) {
       return rejectWithValue(

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import api from '../../api/api'
+import api from '../api/api';
 
 function Prote() {
     const [mess, setMess] = useState({});
@@ -8,6 +8,7 @@ function Prote() {
             try {
                 const res = await api.get('/authUser/protect');
                 alert(res.data.message)
+                
             } catch (error) {
                 alert(error)
             }

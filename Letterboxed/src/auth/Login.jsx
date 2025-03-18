@@ -22,7 +22,7 @@ function Login({ closeLogin }) {
     e.preventDefault();
     try {
       const res = await dispatch(loginUser(userData)).unwrap();
-      alert("suucess");
+      console.log("login successfully")
       closeLogin();
     } catch (error) {
       toast.success(error)
@@ -50,10 +50,10 @@ function Login({ closeLogin }) {
             id=""
             onChange={getUserData} />
         </div>
-        <div className='flex pt-3.5 gap-[5px] items-center'>
+        {/* <div className='flex pt-3.5 gap-[5px] items-center'>
           <input type="checkbox" className='checkbox h-3.5 w-3.5 rounded-[2px] bg-[#2c3440] border-0 checked:bg-[#2c3440] checked:text-[#89a]' />
           <p className='text-[12px] text-[#667788] gra pt-[3px]'>Remember me</p>
-        </div>
+        </div> */}
         <div className='pt-3'>
           <button type='submit' className='px-[12px] text-[12px] rounded-sm font-semibold py-[6px] bg-[#00ac1c] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra' >SIGN IN</button>
         </div>

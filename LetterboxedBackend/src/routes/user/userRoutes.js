@@ -1,13 +1,22 @@
-import express from 'express'
-import trycatch from '../../middlewares/tryCatch.js'
-import { getNewMovies, getOscarsMovies } from '../../controllers/user/movieController.js';
-import { getNewReviews, getPopularOfTheWeek } from '../../controllers/user/reviewController.js';
+import express from "express";
+import trycatch from "../../middlewares/tryCatch.js";
+import {
+  getNewMovies,
+  getOscarsMovies,
+} from "../../controllers/user/movieController.js";
+import {
+  getNewReviews,
+  getPopularOfTheWeek,
+} from "../../controllers/user/reviewController.js";
+import { getPopularLists } from "../../controllers/user/listController.js";
 
 const routes = express.Router();
 
-routes.get('/movies',trycatch(getNewMovies))
-.get('/oscars',trycatch(getOscarsMovies))
-.get('/newReviews',trycatch(getNewReviews))
-.get('/popularReview',trycatch(getPopularOfTheWeek))
+routes
+  .get("/movies", trycatch(getNewMovies))
+  .get("/oscars", trycatch(getOscarsMovies))
+  .get("/newReviews", trycatch(getNewReviews))
+  .get("/popularReview", trycatch(getPopularOfTheWeek))
+  .get('/popularLists',trycatch(getPopularLists))
 
-export default routes
+export default routes;

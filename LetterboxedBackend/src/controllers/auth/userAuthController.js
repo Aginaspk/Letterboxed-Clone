@@ -10,6 +10,11 @@ import user from "../../models/schema/userSchema.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import userSchema from "../../models/schema/userSchema.js";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+
 
 const transporter = nodemailer.createTransport({
   service: "gmail",

@@ -15,7 +15,7 @@ function Intro() {
                     <img className='h-full w-[250px] object-cover' src="https://a.ltrbxd.com/logos/letterboxd-logo-h-neg-rgb.svg" alt="" />
                 </div>
 
-                <img className='w-full h-full object-cover' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741077990/movie_glxp8k.jpg" alt="Movie Image" />
+                <img className='w-full h-full object-cover' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741239608/movie_glxp8k_ybwd3w.jpg" alt="Movie Image" />
             </div>
             <div className='text-white xl:absolute z-30 xl:bottom-7 flex flex-col items-center gap-10 '>
                 <div className='intr hidden xl:flex flex-col items-center text-[20px] xl:text-[40px] xl:font-black xl:leading-10'>
