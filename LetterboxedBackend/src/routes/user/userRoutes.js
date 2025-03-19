@@ -9,6 +9,7 @@ import {
   getPopularOfTheWeek,
 } from "../../controllers/user/reviewController.js";
 import { getPopularLists } from "../../controllers/user/listController.js";
+import { getNewNews } from "../../controllers/user/newsController.js";
 
 const routes = express.Router();
 
@@ -17,6 +18,7 @@ routes
   .get("/oscars", trycatch(getOscarsMovies))
   .get("/newReviews", trycatch(getNewReviews))
   .get("/popularReview", trycatch(getPopularOfTheWeek))
-  .get('/popularLists',trycatch(getPopularLists))
+  .get("/popularLists", trycatch(getPopularLists))
+  .get("/getNews", trycatch(getNewNews));
 
 export default routes;
