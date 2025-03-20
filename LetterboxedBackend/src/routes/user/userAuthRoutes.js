@@ -9,6 +9,7 @@ import {
   userLogin,
   userRegister,
 } from "../../controllers/auth/userAuthController.js";
+import { verifyUser } from "../../middlewares/authentication.js";
 
 const routes = express.Router();
 
@@ -17,7 +18,7 @@ routes
   .post("/login", trycatch(userLogin))
   .get('/logout',trycatch(logoutUser))
   .get("/reffresh", trycatch(refreshUserToken))
-  .get('/protect',trycatch(protecte))
+  .get('/protect',verifyUser,trycatch(protecte))
   .post('/forgot-password',trycatch(forgotPassword))
   .post('/reset-password/:token',trycatch(resetPassword))
 

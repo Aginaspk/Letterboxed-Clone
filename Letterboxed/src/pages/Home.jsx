@@ -23,7 +23,7 @@ function Home() {
   const { newReviews } = useSelector(state => state.review)
   const { popularReviews } = useSelector(state => state.review)
   const { popLists } = useSelector(state => state.lists)
-  const {news} = useSelector(state=>state.news);
+  const { news, loading } = useSelector(state => state.news);
   const sortedReviews = [...(popularReviews?.data || [])].sort((a, b) => {
     return b.reviewText.length - a.reviewText.length;
   });
@@ -39,7 +39,6 @@ function Home() {
     dispatch(getPopularLists())
     dispatch(getLatestNews())
   }, [dispatch])
-
 
   return (
     <div className={`${isAuth ? 'bg-gradient-to-b from-[#1E252C]/50 via[#1E252C] via-5% to-[#14181C] pt-[30px]' : 'bg-[#14181C]'}`}>
@@ -77,11 +76,18 @@ function Home() {
           <p className='mb-2.5 mt-2 text-[#99AABB] text-[15px] pb-[64px] gra'>The nominees for Best Motion Picture of the Year at the 97th Academy Awards, hosted on March 2, 2025. Follow the <Link className='text-[#DDEEFF]' to={"https://www.oscars.org/"}>Oscars</Link>.</p>
 
 
-          <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>LATTEST NEWS</h1>
-          <div className='w-full h-[175px] mb-[64px] flex'>
-            <img src={news?.news[0].image} alt="" className='h-full' />
-            <div className='bg-[#202830] h-full w-full'></div>
-          </div>
+          {isAuth && <>
+            <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>LATTEST NEWS</h1>
+            <div className='w-full h-[175px] mb-[96px] flex '>
+              <img src={news?.news?.[0]?.image} alt="" className='h-full rounded-l-md' />
+              <div className='bg-[#202830] h-full w-full rounded-r-md flex justify-center items-center'>
+                <div className='w-[580px]'>
+                  <h1 className='gra text-[22px] font-bold tracking-wide mb-[5px]'>{news?.news?.[0]?.title}</h1>
+                  <p className='lora text-[17px] font-medium tracking-wide text-[#99AABB]'>{news?.news?.[0]?.news}</p>
+                </div>
+              </div>
+            </div>
+          </>}
 
 
           <div className={`${!isAuth && 'flex justify-between'} `}>

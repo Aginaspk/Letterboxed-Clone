@@ -3,6 +3,7 @@ import trycatch from "../../middlewares/tryCatch.js";
 import {
   getNewMovies,
   getOscarsMovies,
+  getPopOfTheWeek,
 } from "../../controllers/user/movieController.js";
 import {
   getNewReviews,
@@ -19,6 +20,7 @@ routes
   .get("/newReviews", trycatch(getNewReviews))
   .get("/popularReview", trycatch(getPopularOfTheWeek))
   .get("/popularLists", trycatch(getPopularLists))
-  .get("/getNews", trycatch(getNewNews));
+  .get("/getNews", trycatch(getNewNews))
+  .get('/popularMovies',trycatch(getPopOfTheWeek))
 
 export default routes;

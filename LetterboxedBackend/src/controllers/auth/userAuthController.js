@@ -27,12 +27,12 @@ const transporter = nodemailer.createTransport({
 // TokenGenaration
 const generateAccessToken = (userData) =>
   jwt.sign({ id: userData._id }, process.env.ACCESS_SECRET, {
-    expiresIn: "15s",
+    expiresIn: "15m",
   });
 
 const generateRefreshToken = (userData) =>
   jwt.sign({ id: userData._id }, process.env.REFRESH_SECRET, {
-    expiresIn: "60s",
+    expiresIn: "60m",
   });
 
 // Registeration
@@ -259,14 +259,9 @@ const logoutUser = async (req, res) => {
 };
 
 const protecte = async (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json({ message: "No token" });
-
-  jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-
-    res.json({ message: "Protected data", userId: decoded.id });
-  });
+  const user = req.user;
+  const userData = await userSchema.findOne({_id:user.id});
+ res.status(200).json({messgae:userData.userName})
 };
 
 export {

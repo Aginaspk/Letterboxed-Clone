@@ -11,10 +11,9 @@ const MovieSchema = new mongoose.Schema(
     bigPoster: { type: String, default: "" },
     description: { type: String },
     avgRating: { type: Number, default: 0 },
-    isOscar:{ type: Boolean, default: false },
+    isOscar: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-
-export default mongoose.model("filims",MovieSchema)
+export default mongoose.model("filims", MovieSchema);

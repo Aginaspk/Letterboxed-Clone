@@ -7,7 +7,8 @@ function Prote() {
         const au = async () => {
             try {
                 const res = await api.get('/authUser/protect');
-                alert(res.data.message)
+                alert(res.data.messgae)
+                console.log(res.data.messgae)
                 
             } catch (error) {
                 alert(error)

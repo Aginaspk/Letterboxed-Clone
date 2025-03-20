@@ -8,7 +8,7 @@ import { LuSearch } from 'react-icons/lu';
 import { BiSearch } from 'react-icons/bi';
 import { PiPlus } from 'react-icons/pi';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { matchPath, useLocation } from 'react-router-dom';
+import { Link, matchPath, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -16,8 +16,9 @@ function Navbar() {
   const { isAuth, user } = useSelector(state => state.auth)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
-  const isReset = matchPath("/reset-password/:token", location.pathname);
-
+  const paths = ["/reset-password/:token","/filims"];
+  const isReset = paths.some(path => matchPath(path, location.pathname));
+  
 
   const closeLogin = () => {
     setIsLoginOpen(false);
@@ -39,7 +40,7 @@ function Navbar() {
                 <li className='text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer' onClick={() => setIsRegisterOpen(true)}>CREATE ACCOUNT</li>
               </>) : <ProfileDropDown user={user} />}
 
-              <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>FILIMS</li>
+              <Link to={'/filims'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>FILIMS</li></Link>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>LISTS</li>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>MEMBERS</li>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>JOURNAL</li>

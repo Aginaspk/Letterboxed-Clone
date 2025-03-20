@@ -10,6 +10,7 @@ import Prote from './pages/Prote.jsx'
 import ResetPass from './pages/ResetPass.jsx'
 import NewPass from './pages/NewPass.jsx'
 import { Toaster } from 'react-hot-toast'
+import Filims from './pages/Filims.jsx'
 
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
+      },
+      {
+        path:'/filims',
+        element:<Filims/>
       },
       {
         path: '/reset-password/:token',
@@ -45,15 +50,15 @@ createRoot(document.getElementById('root')).render(
       <Toaster
         position="top-left"
         toastOptions={{
-          className:"font-medium w-[450px]",
-          duration:5000,
+          className: "font-medium w-[450px]",
+          duration: 5000,
           style: {
             background: '#EE7000',
-            color: '#fff', 
+            color: '#fff',
             border: '1px solid #e07b30',
             padding: '5px 30px 5px 10px',
           },
-          icon:null
+          icon: null
         }}
       />
     </Provider>
