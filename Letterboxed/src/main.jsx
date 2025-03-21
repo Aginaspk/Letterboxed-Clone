@@ -11,6 +11,7 @@ import ResetPass from './pages/ResetPass.jsx'
 import NewPass from './pages/NewPass.jsx'
 import { Toaster } from 'react-hot-toast'
 import Filims from './pages/Filims.jsx'
+import ViewFilim from './pages/ViewFilim.jsx'
 
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/reset-password/:token',
         element: <NewPass />
+      },
+      {
+        path:'/filims/:filim',
+        element:<ViewFilim/>
       }
 
     ]

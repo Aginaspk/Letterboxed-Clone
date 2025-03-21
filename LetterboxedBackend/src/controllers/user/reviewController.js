@@ -6,7 +6,7 @@ const getNewReviews = async (req, res) => {
     .populate("user", "userName")
     .populate("movie", "title smallPoster")
     .sort({ createdAt: -1 })
-    .limit(6);
+    .limit(12);
 
   res.status(200).json({
     message: "reviews fetched successfully",

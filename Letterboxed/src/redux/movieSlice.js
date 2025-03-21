@@ -4,6 +4,7 @@ import api from "../api/api";
 const INITIAL_STATE = {
   movies: {},
   oscars: {},
+  popMovies: {},
   loading: false,
   error: null,
 };
@@ -27,6 +28,20 @@ export const getOscarsMovies = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await api.get("/user/oscars");
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
+export const getPopMovies = createAsyncThunk(
+  "movie/getPopMovies",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get("/user/popularMovies");
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -61,6 +76,17 @@ const movieSlice = createSlice({
         state.oscars = action.payload;
       })
       .addCase(getOscarsMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getPopMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getPopMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.popMovies = action.payload;
+      })
+      .addCase(getPopMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

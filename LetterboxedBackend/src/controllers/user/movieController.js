@@ -19,67 +19,7 @@ const getOscarsMovies = async (req, res) => {
   });
 };
 
-// const getPopOfTheWeek = async (req, res) => {
-//   const currentDate = new Date();
-//   const startOfWeek = new Date(currentDate);
-//   startOfWeek.setUTCDate(currentDate.getUTCDate() - 7);
-//   startOfWeek.setUTCHours(0, 0, 0, 0);
-//   const endOfWeek = new Date(currentDate);
-//   endOfWeek.setUTCHours(23, 59, 59, 999);
 
-//   const popMovies = await movieanduserSchema.aggregate([
-//     {
-//       $match: {
-//         likedAt: {
-//           $gte: endOfWeek,
-//           $lte: startOfWeek,
-//         },
-//       },
-//     },
-//     // Group by movie and count likes
-//     {
-//       $group: {
-//         _id: "$movie",
-//         likeCount: { $sum: 1 },
-//       },
-//     },
-//     // Sort by likeCount in descending order
-//     {
-//       $sort: { likeCount: -1 },
-//     },
-//     // Limit to top 10 (optional, adjust as needed)
-//     {
-//       $limit: 10,
-//     },
-//     // Lookup movie details from the Films collection
-//     {
-//       $lookup: {
-//         from: "filims", // Collection name for Films (adjust if different)
-//         localField: "_id",
-//         foreignField: "_id",
-//         as: "movieDetails",
-//       },
-//     },
-//     // Unwind the movieDetails array
-//     {
-//       $unwind: "$movieDetails",
-//     },
-//     // Project the desired fields
-//     {
-//       $project: {
-//         _id: "$movieDetails._id",
-//         title: "$movieDetails.title",
-//         smallPoster: "$movieDetails.smallPoster",
-//         likeCount: 1,
-//       },
-//     },
-//   ]);
-
-//   res.status(200).json({
-//     message: "Most liked movies of the week",
-//     data: popMovies,
-//   });
-// };
 
 const getPopOfTheWeek = async (req, res) => {
   const currentDate = new Date();
@@ -118,7 +58,7 @@ const getPopOfTheWeek = async (req, res) => {
       },
     },
     { $sort: { likeCount: -1 } },
-    { $limit: 4 },
+    { $limit: 8 },
     {
       $addFields: {
         viewCount: { $size: "$viewers" },
@@ -133,7 +73,7 @@ const getPopOfTheWeek = async (req, res) => {
         foreignField: "_id",
         as: "movieDetails",
       },
-    }, // Fixed typo
+    }, 
     { $unwind: "$movieDetails" },
     {
       $project: {
@@ -149,8 +89,6 @@ const getPopOfTheWeek = async (req, res) => {
   res.status(200).json({
     message: "Most liked movies of the week",
     data: popMovies,
-    startOfWeek,
-    endOfWeek,
   });
 };
 

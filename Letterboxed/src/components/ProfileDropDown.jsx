@@ -7,6 +7,8 @@ function ProfileDropDown({ user }) {
     const dispatch = useDispatch();
     const [isHover, setIsHover] = useState(false)
 
+    console.log(user)
+
     const signouUser = async () => {
         try {
             const res = await dispatch(logOutUser()).unwrap()
@@ -16,10 +18,10 @@ function ProfileDropDown({ user }) {
         }
     }
     return (
-        <div className={`${isHover && "bg-[#8899AA]"} relative px-1 rounded-t-sm mt-[1px]`} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <div className={`${isHover && "bg-[#8899AA]"} relative px-1 rounded-t-sm mt-[1px] z-50`} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             <div className='flex w-full items-center gap-[2px] py-1.5 px-3'>
                 <div className='w-[24px] h-[24px] flex items-center rounded-full overflow-hidden border border-[#99AABB] shadow-[0_0_2px_rgba(0,0,0,0.2)] mr-2'>
-                    <img className='object-cover' src="https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png" alt="" />
+                    <img className='object-cover' src={user?.pic ? user?.pic : "https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png"} alt="" />
                 </div>
                 <p className={`text-[13px] tracking-widest font-[795] h-4 text-[#99AABB] ${isHover && "text-white"} cursor-pointer uppercase gra`}>{user.userName}</p>
                 <MdKeyboardArrowDown size={20} />

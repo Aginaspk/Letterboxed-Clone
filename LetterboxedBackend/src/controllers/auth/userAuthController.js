@@ -124,7 +124,7 @@ const userLogin = async (req, res, next) => {
     message: "user logged in successfully",
     accessToken,
     refreshToken,
-    user: { userName: userData.userName, email: userData.email },
+    user: { userName: userData.userName, email: userData.email,pic:userData.profilePic},
   });
 };
 

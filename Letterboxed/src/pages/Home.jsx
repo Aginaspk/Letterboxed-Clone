@@ -51,8 +51,10 @@ function Home() {
             <p className='text-[15px] text-center mt-[-20px] mb-[35px] text-[#99AABB]'>This homepage will become customized as you <span className='text-white'>follow active members</span> on Letterboxd.</p>
             <h1 className='w-full pb-[5px] border-b mb-[10px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra'>NEW ON LETTERBOXD</h1>
             <div className='grid grid-cols-6 gap-2 pb-[40px]'>
-              {newReviews?.data?.map((item) => {
-                return <ReviewCard key={item._id} item={item} />
+              {newReviews?.data?.map((item, index) => {
+                if (index < 6) {
+                  return <ReviewCard key={item._id} item={item} />
+                }
               })}
             </div>
             <img className='w-full mb-[40px]' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741588121/pro-950_qrg5h9.png" alt="" />

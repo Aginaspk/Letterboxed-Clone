@@ -12,7 +12,7 @@ const ReviewSchema = new mongoose.Schema(
       ref: "filims",
       required: true,
     },
-    rating: { type: Number, min: 0, max: 10 }, 
+    rating: { type: Number, min: 0, max: 5 }, 
     reviewText: { type: String },
     comments: [
       {

@@ -5,6 +5,7 @@ import authReducer from "../auth/authSlice.js";
 import reviewReducer from "../redux/reviewSlice.js";
 import listReducer from "../redux/listsSlice.js";
 import newsReducer from "../redux/newsSlice.js";
+import membersReducer from "../redux/membersSlice.js";
 import { persistStore } from "redux-persist";
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     review: reviewReducer,
     lists: listReducer,
     news: newsReducer,
+    members: membersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
