@@ -19,14 +19,17 @@ function Navbar() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
   const paths = ["/reset-password/:token","/filims"];
   const isReset = paths.some(path => matchPath(path, location.pathname));
-  
+  const traPaths = ["/filims/:filim","/list/:id"];
+  const isTra = traPaths.some(path => matchPath(path, location.pathname));
+
+
 
   const closeLogin = () => {
     setIsLoginOpen(false);
   }
 
   return (<>
-    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${isAuth || isReset ? 'bg-[#14181C] static' : 'bg-transparent absolute'}   top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
+    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${isAuth || isReset && 'bg-[#14181C] static' } ${isTra && 'bg-transparent absolute '}  top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
       <div className='flex xl:gap-20 items-center '>
         <div className="w-[250px] h-[32px] flex items-center" onClick={()=>navigate('/')}>
           <img className='w-full h-full object-cover' src="https://a.ltrbxd.com/logos/letterboxd-logo-h-neg-rgb.svg" alt="" />
@@ -42,7 +45,7 @@ function Navbar() {
               </>) : <ProfileDropDown user={user} />}
 
               <Link to={'/filims'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>FILIMS</li></Link>
-              <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>LISTS</li>
+              <Link to={'/lists'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>LISTS</li></Link>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>MEMBERS</li>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>JOURNAL</li>
               {!isAuth ? (

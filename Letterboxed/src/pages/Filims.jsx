@@ -20,7 +20,6 @@ function Filims() {
 
     const fisrtHalf = popMovies?.data?.slice(0, 4);
     const secondHalf = popMovies?.data?.slice(4, 8)
-    console.log(popReviwers)
 
 
 

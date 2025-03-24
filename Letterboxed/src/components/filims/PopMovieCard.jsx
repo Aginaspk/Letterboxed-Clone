@@ -18,7 +18,7 @@ function PopMovieCard({ filim }) {
             <div className='flex w-full justify-center gap-2 pt-2 pb-[5px]'>
                 <div className='flex items-center gap-[2px]'>
                     <IoMdEye size={16} className='text-[#00C030] mb-[2px] ' />
-                    <h1 className='gra text-[#667788] gra text-[12px]'>{filim?.likeCount}</h1>
+                    <h1 className='gra text-[#667788] gra text-[12px]'>{filim?.viewCount}</h1>
 
                 </div>
                 <div className='flex items-center gap-[2px]'>
@@ -28,7 +28,7 @@ function PopMovieCard({ filim }) {
                 </div>
                 <div className='flex items-center gap-[2px]'>
                     <IoMdHeart size={14} className='text-[#FF9010] mb-[1px]' />
-                    <h1 className='gra text-[#667788] gra text-[12px]'>{filim?.viewCount}</h1>
+                    <h1 className='gra text-[#667788] gra text-[12px]'>{filim?.likeCount}</h1>
                 </div>
             </div>
         </div>

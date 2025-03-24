@@ -27,6 +27,7 @@ const listSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
+        likedAt: { type: Date, default: Date.now },
       },
     ],
     comments: [
@@ -57,5 +58,4 @@ const listSchema = new mongoose.Schema(
   }
 );
 
-
-export default mongoose.model("movieLists",listSchema);
+export default mongoose.model("movieLists", listSchema);

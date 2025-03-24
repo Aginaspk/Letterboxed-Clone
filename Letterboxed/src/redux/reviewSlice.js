@@ -4,6 +4,8 @@ import api from "../api/api";
 const INITIAL_STATE = {
   newReviews: {},
   popularReviews: {},
+  avg:{},
+  popReviewById:{},
   loading: false,
   error: null,
 };
@@ -36,6 +38,35 @@ export const getPopularReviews = createAsyncThunk(
   }
 );
 
+export const getAvgRating = createAsyncThunk(
+  "review/getAvgRating",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/avgRating/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
+export const getPopReviewsById = createAsyncThunk(
+  "review/getPopReviewsById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/popReviewById/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
+
 const reviewSlice = createSlice({
   name: "review",
   initialState: INITIAL_STATE,
@@ -63,7 +94,29 @@ const reviewSlice = createSlice({
       .addCase(getPopularReviews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getAvgRating.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAvgRating.fulfilled, (state, action) => {
+        state.loading = false;
+        state.avg = action.payload;
+      })
+      .addCase(getAvgRating.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getPopReviewsById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getPopReviewsById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.popReviewById = action.payload;
+      })
+      .addCase(getPopReviewsById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

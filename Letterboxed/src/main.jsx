@@ -12,6 +12,8 @@ import NewPass from './pages/NewPass.jsx'
 import { Toaster } from 'react-hot-toast'
 import Filims from './pages/Filims.jsx'
 import ViewFilim from './pages/ViewFilim.jsx'
+import ListPage from './pages/ListPage.jsx'
+import ViewList from './pages/ViewList.jsx'
 
 
 const router = createBrowserRouter([
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
       {
         path:'/filims/:filim',
         element:<ViewFilim/>
+      },
+      {
+        path:'/lists',
+        element:<ListPage/>
+      },
+      {
+        path:'/list/:id',
+        element:<ViewList/>
       }
 
     ]
