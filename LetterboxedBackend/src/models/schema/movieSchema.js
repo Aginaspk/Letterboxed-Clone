@@ -10,6 +10,7 @@ const MovieSchema = new mongoose.Schema(
     smallPoster: { type: String, default: "" },
     bigPoster: { type: String, default: "" },
     description: { type: String },
+    smallDescription: { type: String },
     avgRating: { type: Number, default: 0 },
     isOscar: { type: Boolean, default: false },
   },
