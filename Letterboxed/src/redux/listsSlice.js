@@ -5,6 +5,8 @@ const INITIAL_STATE = {
   popLists: {},
   popOfWeek: {},
   recentlyLiked:{},
+  listById:{},
+  isLiked:{},
   loading: true,
   error: null,
 };
@@ -41,6 +43,45 @@ export const getRecentlyLiked = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await api.get("/user/getRecentlyLikedList");
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const getListById = createAsyncThunk(
+  "lists/getListById",
+  async (listId, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getListById/${listId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const likeAList = createAsyncThunk(
+  "lists/likeAList",
+  async (listId, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/user/likeList`,{listId});
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const isUserLiked = createAsyncThunk(
+  "lists/isUserLiked",
+  async (listId, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/user/isLiked`,{listId});
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -87,6 +128,21 @@ const listsSlice = createSlice({
       .addCase(getRecentlyLiked.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(getListById.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getListById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.listById = action.payload;
+      })
+      .addCase(getListById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(isUserLiked.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLiked = action.payload;
       })
   },
 });

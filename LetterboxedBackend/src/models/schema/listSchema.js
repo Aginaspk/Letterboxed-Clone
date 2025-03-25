@@ -25,8 +25,7 @@ const listSchema = new mongoose.Schema(
     ],
     likes: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
         likedAt: { type: Date, default: Date.now },
       },
     ],

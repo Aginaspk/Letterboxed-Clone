@@ -1,4 +1,5 @@
 import listSchema from "../../models/schema/listSchema.js";
+import CustomError from "../../utils/customeError.js";
 
 const getPopularLists = async (req, res) => {
   const popularList = await listSchema
@@ -115,7 +116,7 @@ const getRecentlyLiked = async (req, res) => {
     { $unwind: "$user" },
     {
       $lookup: {
-        from: "filims", 
+        from: "filims",
         localField: "movies",
         foreignField: "_id",
         as: "movies",
@@ -129,7 +130,7 @@ const getRecentlyLiked = async (req, res) => {
         user: { _id: 1, userName: 1 },
         movies: { _id: 1, title: 1, smallPoster: 1 },
         mostRecentLike: 1,
-        likes: 1, 
+        likes: 1,
       },
     },
   ]);
@@ -151,4 +152,95 @@ const getRecentlyLiked = async (req, res) => {
   });
 };
 
-export { getPopularLists, getPopOfWeek, getRecentlyLiked };
+const getListById = async (req, res, next) => {
+  const { listId } = req.params;
+  if (!listId) {
+    return next(new CustomError("no id found", 400));
+  }
+  const list = await listSchema
+    .findById(listId)
+    .populate("user", "userName")
+    .populate("movies", "title smallPoster")
+    .populate("comments.user", "userName");
+  if (!list) {
+    return next(new CustomError("no list found on this Id", 400));
+  }
+  res.status(200).json({
+    data: list,
+  });
+};
+
+const likeALsit = async (req, res, next) => {
+  const userId = req.user?.id; 
+    const { listId } = req.body;
+
+    if (!userId || !listId) {
+      return next(new CustomError("No user or list found", 400));
+    }
+
+    const movieList = await listSchema.findById(listId);
+
+    if (!movieList) {
+      return res.status(404).json({ message: "Movie list not found" });
+    }
+
+    movieList.likes = movieList.likes.filter(like => like !== null);
+
+    const userIdString = userId.toString();
+    const existingLikeIndex = movieList.likes.findIndex(
+      (like) => like?.user?.toString() === userIdString
+    );
+
+    if (existingLikeIndex === -1) {
+      movieList.likes.push({
+        user: userId, 
+        likedAt: new Date() 
+      });
+    } else {
+      movieList.likes.splice(existingLikeIndex, 1);
+    }
+
+    await movieList.save();
+
+    return res.status(200).json({
+      message: "Like updated successfully",
+      likesCount: movieList.likes.length,
+      isLiked: existingLikeIndex === -1,
+    });
+};
+
+const isUserLiked = async (req, res, next) => {
+  const userId = req.user?._id || req.user?.id;
+  const { listId } = req.body;
+
+  if (!userId) {
+    return next(new CustomError("User not authenticated", 401));
+  }
+
+  if (!listId) {
+    return next(new CustomError("List ID is required", 400));
+  }
+
+  const movieList = await listSchema.findById(listId);
+
+  if (!movieList) {
+    return res.status(404).json({ message: "Movie list not found" });
+  }
+
+  const isLiked = movieList.likes.some(
+    (like) => like?.user?.toString() === userId.toString()
+  );
+
+  return res.status(200).json({
+    isLiked: isLiked,
+  });
+};
+
+export {
+  getPopularLists,
+  getPopOfWeek,
+  getRecentlyLiked,
+  getListById,
+  likeALsit,
+  isUserLiked
+};

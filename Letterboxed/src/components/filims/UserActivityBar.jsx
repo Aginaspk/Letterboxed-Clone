@@ -41,7 +41,7 @@ function UserActivityBar({filim}) {
     const watchlistAMovie = async()=>{
         try {
             const res = await dispatch(watchlistMovie(filim)).unwrap();
-            setWatch(!watchlist)
+            setWatchlist(!watchlist)
         } catch (error) {
             alert(error)
         }

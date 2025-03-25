@@ -46,7 +46,7 @@ function Navbar() {
 
               <Link to={'/filims'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>FILIMS</li></Link>
               <Link to={'/lists'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>LISTS</li></Link>
-              <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>MEMBERS</li>
+              <Link to={'/members'}><li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>MEMBERS</li></Link>
               <li className={`text-[13px] tracking-wider font-[795] h-4 hover:text-white cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`}>JOURNAL</li>
               {!isAuth ? (
                 <li className={` flex items-center mt-1`}><input className='bg-[#BFC1C2]/30 w-[140px] h-[30px] rounded-3xl' type="text" /></li>)

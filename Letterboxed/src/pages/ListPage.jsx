@@ -46,7 +46,7 @@ function ListPage() {
           <div className='w-[630px]'>
             <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>RECENTLY LIKED</h1>
             {recentlyLiked?.data?.map((item) => {
-              return <div className={` mb-[15px] border-b border-[#456]/50 w-full`}><ListCard item={item} /></div>
+              return <Link to={`/list/${item?._id}`}><div className={` mb-[15px] border-b border-[#456]/50 w-full`}><ListCard item={item} /></div></Link>
             })}
 
 
@@ -61,7 +61,7 @@ function ListPage() {
             if(index>1){
               return
             }
-            return <div className='w-[460px]'><AllTimeCard item={item} /></div>
+            return  <Link to={`/list/${item?._id}`}><div className='w-[460px]'><AllTimeCard item={item} /></div></Link>
           })}
         </div>
 

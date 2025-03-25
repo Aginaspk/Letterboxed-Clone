@@ -110,7 +110,7 @@ function Home() {
               <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>POPULAR LIST</h1>
               <div className={`w-full ${isAuth && 'flex gap-14'}`}>
                 {popLists?.data?.map((item) => {
-                  return <div className={`${isAuth ? "w-[256px]" : "w-full"}`}><ListCard item={item} /></div>
+                  return <Link to={`/list/${item?._id}`}><div className={`${isAuth ? "w-[256px]" : "w-full"}`}><ListCard item={item} /></div></Link>
                 })}
               </div>
 

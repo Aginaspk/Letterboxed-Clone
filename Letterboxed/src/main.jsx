@@ -14,6 +14,7 @@ import Filims from './pages/Filims.jsx'
 import ViewFilim from './pages/ViewFilim.jsx'
 import ListPage from './pages/ListPage.jsx'
 import ViewList from './pages/ViewList.jsx'
+import Members from './pages/Members.jsx'
 
 
 const router = createBrowserRouter([
@@ -42,8 +43,12 @@ const router = createBrowserRouter([
         element:<ListPage/>
       },
       {
-        path:'/list/:id',
+        path:'/list/:listId',
         element:<ViewList/>
+      },
+      {
+        path:'/members',
+        element:<Members/>
       }
 
     ]
