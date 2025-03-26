@@ -21,6 +21,7 @@ import { getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLik
 import { getNewNews } from "../../controllers/user/newsController.js";
 import { getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers } from "../../controllers/user/memberController.js";
 import { verifyUser } from "../../middlewares/authentication.js";
+import { searchAllCollections } from "../../controllers/user/seacrhController.js";
 
 const routes = express.Router();
 
@@ -41,6 +42,7 @@ routes
   .get('/getPopOfWeek',trycatch(getPopOfWeek))
   .get('/getRecentlyLikedList',trycatch(getRecentlyLiked))
   .get('/getListById/:listId',trycatch(getListById))
+  .get('/seacrh/:searchText',trycatch(searchAllCollections))
   .post('/likeMovie',verifyUser,trycatch(likeMovie))
   .post('/getIntra',verifyUser,trycatch(getIntraById))
   .post('/watchMovie',verifyUser,trycatch(watchMovie))

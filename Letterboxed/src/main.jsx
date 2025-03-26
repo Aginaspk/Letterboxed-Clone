@@ -15,6 +15,7 @@ import ViewFilim from './pages/ViewFilim.jsx'
 import ListPage from './pages/ListPage.jsx'
 import ViewList from './pages/ViewList.jsx'
 import Members from './pages/Members.jsx'
+import SeacrhPage from './pages/SeacrhPage.jsx'
 
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path:'/members',
         element:<Members/>
+      },
+      {
+        path:'/search/:searchText',
+        element:<SeacrhPage/>
       }
 
     ]
