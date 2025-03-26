@@ -17,10 +17,10 @@ function Navbar() {
   const { isAuth, user } = useSelector(state => state.auth)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
-  const paths = ["/reset-password/:token","/filims"];
+  const paths = ["/reset-password/:token", "/filims","/members","lists"];
   const isReset = paths.some(path => matchPath(path, location.pathname));
-  const traPaths = ["/filims/:filim","/list/:id"];
-  const isTra = traPaths.some(path => matchPath(path, location.pathname));
+  const home = ["/"];
+  const isHome = home.some(path => matchPath(path, location.pathname));
 
 
 
@@ -29,9 +29,9 @@ function Navbar() {
   }
 
   return (<>
-    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${isAuth || isReset && 'bg-[#14181C] static' } ${isTra && 'bg-transparent absolute '}  top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
+    <div className={`xl:h-[72px] h-[50px] w-full flex justify-center ${(isAuth && isHome) || isReset  ? 'bg-[#14181C] static' : 'bg-transparent absolute' }  top-0 nav z-50`} onMouseEnter={() => dispatch(setNavHover(true))} onMouseLeave={() => dispatch(setNavHover(false))}>
       <div className='flex xl:gap-20 items-center '>
-        <div className="w-[250px] h-[32px] flex items-center" onClick={()=>navigate('/')}>
+        <div className="w-[250px] h-[32px] flex items-center" onClick={() => navigate('/')}>
           <img className='w-full h-full object-cover' src="https://a.ltrbxd.com/logos/letterboxd-logo-h-neg-rgb.svg" alt="" />
         </div>
 
