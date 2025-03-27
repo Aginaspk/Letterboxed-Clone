@@ -28,8 +28,8 @@ function ListPage() {
           <img className='w-full' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741588121/pro-950_qrg5h9.png" alt="" />
         </div>
         <div className='w-full flex flex-col items-center mb-[30px]'>
-          <h1 className='text-[25px] gra tracking-wider text-center text-[#AABBCC] mb-[10px]'>Collect, curate, and share. Lists are the perfect way to group films.</h1>
-          <div className='text-[#9AB] bg-[#283038] shadow-[inset_0_1px_rgba(255,255,255,0.05)] px-[5px] py-[4px] w-[140px] text-[13px] gra font-medium text-center rounded-sm'>Start your own list</div>
+          <h1 className='text-[25px] gralight tracking-wider text-center text-[#AABBCC] mb-[10px]'>Collect, curate, and share. Lists are the perfect way to group films.</h1>
+          <div className='text-[#9AB] bg-[#283038] shadow-[inset_0_1px_rgba(255,255,255,0.05)] px-[5px] py-[4px] w-[140px] text-[12px] graReg  text-center rounded-sm'>Start your own list</div>
         </div>
 
         <h1 className='w-full pb-[5px] border-b mb-[20px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra '>POPULAR THIS WEEK</h1>

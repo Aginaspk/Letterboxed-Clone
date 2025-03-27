@@ -325,7 +325,6 @@ const rateMovie = async (req, res, next) => {
   });
 
   if (interaction) {
-    // Document exists, update rating
     interaction.rating = rating;
     await interaction.save();
     return res.status(200).json({
@@ -333,9 +332,8 @@ const rateMovie = async (req, res, next) => {
       data: interaction,
     });
   } else {
-    // Document doesn’t exist, create with rating
     interaction = new movieanduserSchema({
-      user: userId,
+      user: user.id,
       movie: movieId,
       watchedAt: null,
       likedAt: null,

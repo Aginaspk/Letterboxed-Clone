@@ -23,20 +23,20 @@ function PopCard({ item }) {
                 })}
             </div>
             <div className='w-full'>
-                <h3 className='text-[18px] font-bold gra capitalize mt-2 mb-1 tracking-wider '>{item?.title}</h3>
+                <h3 className='text-[17px] gra capitalize mt-2 mb-1 tracking-wider '>{item?.title}</h3>
             </div>
             <div className='flex items-center'>
                 <div className='w-[18px] h-[18px] rounded-full overflow-hidden mr-1'>
                     <img className='w-full h-full' src="https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png" alt="" />
                 </div>
-                <p className='font-bold gra text-[14px] text-[#AABBCC] mr-2'>{item?.user?.userName}</p>
+                <p className='gra text-[13px] text-[#AABBCC] mr-2'>{item?.user?.userName}</p>
                 <div className='relative text-[#667788] mr-1.5 tracking-wider'>
                     <TiHeart size={21} className='absolute' />
-                    <p className='pl-[20px] text-[14px] font-extralight'>{item?.likes.length}</p>
+                    <p className='pl-[20px] text-[13px] graReg'>{item?.likes.length}</p>
                 </div>
                 <div className='relative text-[#667788] mr-1.5'>
                     <IoChatbox size={16} className='absolute top-[3px]' />
-                    <p className='pl-4.5 text-[14px] font-extralight'>{item?.comments?.length || 0}</p>
+                    <p className='pl-4.5 text-[13px] graReg'>{item?.comments?.length || 0}</p>
                 </div>
 
             </div>

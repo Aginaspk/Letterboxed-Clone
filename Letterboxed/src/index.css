@@ -2,14 +2,44 @@
 @plugin "daisyui";
 
 
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('/src/font/TestTiemposText-Semibold-BF66457a4fed201.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'graphik-semibold';
+  src: url('/src/font/Graphik-Semibold-Trial.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'graphik-reg';
+  src: url('/src/font/Graphik-Regular-Trial.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'graphik-light';
+  src: url('/src/font/Graphik-Light-Trial.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 .gra{
-  font-family: "Work Sans", sans-serif;
+  font-family: "graphik-semibold", sans-serif;
+}
+.graReg{
+  font-family: "graphik-reg", sans-serif;
+
+}
+.gralight{
+  font-family: "graphik-light", sans-serif;
+
 }
 
 .intr{
-  font-family: 'Playfair Display', serif;
-  font-weight: 900; /* Adjust size */
-  letter-spacing: 0.5px; /* Slight spacing */
+  font-family: 'MyCustomFont', serif;
 }
 .lora{
   font-family: "Lora", serif;

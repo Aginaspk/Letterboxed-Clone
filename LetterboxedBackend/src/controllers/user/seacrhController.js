@@ -2,6 +2,7 @@ import listSchema from "../../models/schema/listSchema.js";
 import movieSchema from "../../models/schema/movieSchema.js";
 import reviewSchema from "../../models/schema/reviewSchema.js";
 import userSchema from "../../models/schema/userSchema.js";
+import CustomError from "../../utils/customeError.js";
 
 const searchAllCollections = async (req, res) => {
   const { searchText } = req.params;
@@ -64,4 +65,25 @@ const searchAllCollections = async (req, res) => {
   });
 };
 
-export { searchAllCollections };
+const searchMovie = async (req, res, next) => {
+  const { searchText } = req.params;
+  if (!searchText || searchText.trim() === "") {
+    return next(new CustomError("Search text is required", 400));
+  }
+  const regex = new RegExp(searchText, "i");
+  const movie = await movieSchema
+    .find({ title: regex })
+    .select("title releaseYear director _id ");
+
+  if (!movie) {
+    return res.status(200).json({
+      data: {},
+    });
+  }
+
+  res.status(200).json({
+    data: movie,
+  });
+};
+
+export { searchAllCollections, searchMovie };

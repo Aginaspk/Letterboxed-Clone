@@ -7,7 +7,6 @@ function ProfileDropDown({ user }) {
     const dispatch = useDispatch();
     const [isHover, setIsHover] = useState(false)
 
-    console.log(user)
 
     const signouUser = async () => {
         try {

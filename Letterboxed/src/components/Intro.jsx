@@ -18,7 +18,7 @@ function Intro() {
                 <img className='w-full h-full object-cover' src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1741239608/movie_glxp8k_ybwd3w.jpg" alt="Movie Image" />
             </div>
             <div className='text-white xl:absolute z-30 xl:bottom-7 flex flex-col items-center gap-10 '>
-                <div className='intr hidden xl:flex flex-col items-center text-[20px] xl:text-[40px] xl:font-black xl:leading-10'>
+                <div className='intr hidden xl:flex flex-col items-center text-[20px] xl:text-[36px] xl:leading-11'>
                     <h1>Track films you’ve watched.</h1>
                     <h1>Save those you want to see.</h1>
                     <h1>Tell your friends what’s good.</h1>

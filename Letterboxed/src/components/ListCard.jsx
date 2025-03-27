@@ -10,7 +10,6 @@ function ListCard({ item }) {
 
     const isFlex = paths.some(path => matchPath(path, location.pathname));
     const { isAuth, user } = useSelector(state => state.auth)
-    console.log(isFlex);
 
 
     return (
