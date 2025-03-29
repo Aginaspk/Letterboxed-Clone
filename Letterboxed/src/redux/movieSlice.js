@@ -57,6 +57,7 @@ export const getMovieById = createAsyncThunk(
   "movie/getMovieById",
   async (id, { rejectWithValue }) => {
     try {
+      console.log(id)
       const { data } = await api.get(`/user/movieById/${id}`);
       return data;
     } catch (error) {

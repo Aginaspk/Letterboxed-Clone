@@ -3,10 +3,11 @@ import { LuX } from 'react-icons/lu'
 import { useDispatch, useSelector } from 'react-redux'
 import { seacrhMovies } from '../../redux/searchSlice';
 
-function SearchForReview({ isOpen, onClose }) {
+function SearchForReview({ isOpen, onClose,getTheMovie }) {
     const dispatch = useDispatch();
     const [films, setFilms] = useState(null)
     const { movies } = useSelector(state => state.search)
+    console.log(movies)
 
     const searchFilms = (e) => {
         const val = e.target.value;
@@ -33,7 +34,7 @@ function SearchForReview({ isOpen, onClose }) {
                             <div className=' w-[480px] list-none border border-[#C8D8E8] absolute top-[56px] bg-[#445566]  '>
                                 <div className='max-h-[180px] w-[480px] overflow-y-scroll'>
                                     {films?.data?.map((item, index) => {
-                                        return <li key={index} className='text-[12px] graReg text-white py-[6px] hover:bg-[#00Ac1c] cursor-pointer pr-[8px] pl-[10px] bg-[#667788]'>Dune part two (2024) <span className='text-[10px] graReg text-[#D8E0E8]'>Kin ju</span></li>
+                                        return <li onClick={()=>getTheMovie(item._id)} key={index} className='text-[12px] graReg text-white py-[6px] hover:bg-[#00Ac1c] cursor-pointer pr-[8px] pl-[10px] bg-[#667788]'>{item?.title} ({item?.releaseYear}) <span className='text-[10px] graReg text-[#D8E0E8]'>{item?.director}</span></li>
 
                                     })}
                                 </div>

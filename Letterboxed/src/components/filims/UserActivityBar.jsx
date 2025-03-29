@@ -61,35 +61,35 @@ function UserActivityBar({filim}) {
             <div className='h-[82px] w-full py-2.5 border border-[#2C3440] flex justify-evenly '>
                 <div className='text-[#bcd]/50 flex flex-col justify-center items-center' onClick={watchAMovie}>
                     <IoEyeSharp className={`${intraById?.intra?.watchedAt && 'text-[#00E054]'}`}  size={40} />
-                    <p className='text-[12px] gra tracking-wide text-[#bcd] '>Watch</p>
+                    <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Watch</p>
                 </div>
                 <div className='text-[#bcd]/50 flex flex-col justify-center items-center' onClick={likeAMovie}>
                     <IoHeartSharp className={`${intraById?.intra?.likedAt && 'text-[#FF9010]'}`} size={40} />
-                    <p className='text-[12px] gra tracking-wide text-[#bcd] '>Like</p>
+                    <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Like</p>
 
                 </div>
                 <div className='text-[#bcd]/50 flex flex-col justify-center items-center' onClick={watchlistAMovie}>
                     <IoTimeSharp className={`${intraById?.intra?.isInWatchlist && 'text-[#40BCF4]'}`} size={40} />
-                    <p className='text-[12px] gra tracking-wide text-[#bcd] '>Watchlist</p>
+                    <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Watchlist</p>
 
                 </div>
             </div>
             <div className='h-[75px] w-full py-2.5 border border-[#2C3440] flex flex-col items-center justify-center'>
-                <p className='text-[12px] gra tracking-wide text-[#bcd] '>Rate</p>
+                <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Rate</p>
                 <Stack spacing={1} >
                     <Rating name="half-rating" onChange={(event,newVal)=>{rateAMovie(newVal);}} value={intraById?.intra?.rating ?? 0} precision={0.5} sx={{ color: "#40BCF4" || "#556677", fontSize: "40px" }} />
                 </Stack>
             </div>
             <div className='w-full py-3 border border-[#2C3440] flex justify-center'>
-                <p className='text-[12px] font-medium gra tracking-wide text-[#bcd] '>Review or log</p>
+                <p className='text-[12px] font-medium graReg tracking-wide text-[#bcd] '>Review or log</p>
 
             </div>
             <div className='w-full py-3 border border-[#2C3440] flex justify-center'>
-                <p className='text-[12px] font-medium gra tracking-wide text-[#bcd] '>Add to list</p>
+                <p className='text-[12px] font-medium graReg tracking-wide text-[#bcd] '>Add to list</p>
 
             </div>
             <div className='w-full py-3 border border-[#2C3440] flex justify-center'>
-                <p className='text-[12px] font-medium gra tracking-wide text-[#bcd] '>Watchlist</p>
+                <p className='text-[12px] font-medium graReg tracking-wide text-[#bcd] '>Watchlist</p>
 
             </div>
 

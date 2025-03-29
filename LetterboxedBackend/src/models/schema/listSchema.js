@@ -15,7 +15,7 @@ const listSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: true,
-    },
+    }, 
     movies: [
       {
         type: mongoose.Schema.Types.ObjectId,

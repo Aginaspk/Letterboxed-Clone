@@ -16,6 +16,7 @@ import {
   getNewReviews,
   getPopReviewById,
   getPopularOfTheWeek,
+  writeAReview,
 } from "../../controllers/user/reviewController.js";
 import { getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLiked, likeALsit } from "../../controllers/user/listController.js";
 import { getNewNews } from "../../controllers/user/newsController.js";
@@ -51,5 +52,6 @@ routes
   .post('/watchlistMovie',verifyUser,trycatch(watchlistMovie))
   .post('/likeList',verifyUser,trycatch(likeALsit))
   .post('/isLiked',verifyUser,trycatch(isUserLiked))
+  .post('/writeReview',verifyUser,trycatch(writeAReview))
 
 export default routes;

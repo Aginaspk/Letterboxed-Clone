@@ -65,6 +65,20 @@ export const getPopReviewsById = createAsyncThunk(
     }
   }
 );
+export const writeReview = createAsyncThunk(
+  "review/writeReview",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/popReviewById/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+
 
 
 const reviewSlice = createSlice({

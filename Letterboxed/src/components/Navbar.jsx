@@ -10,6 +10,7 @@ import { PiPlus } from 'react-icons/pi';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom';
 import SearchForReview from './Search/SearchForReview';
+import WriteReview from '../pages/WriteReview';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ function Navbar() {
   const [search, setSeacrh] = useState(false)
   const [openS, setOpenS] = useState(false)
   const [sInput, setSInput] = useState("");
-  const [isLogOpen,setIsLogOpen] = useState(false)
+  const [isLogOpen, setIsLogOpen] = useState(false)
+  const [isWriteOpen,setIsWriteOpen] = useState(false)
+  const [movie, setMovie] = useState(null);
 
 
   const { isAuth, user } = useSelector(state => state.auth)
@@ -47,6 +50,12 @@ function Navbar() {
     navigate(`/search/${sInput}`)
     setSInput("")
 
+  }
+
+  const getTheMovie = (movie) => {
+    setMovie(movie)
+    setIsLogOpen(false)
+    setIsWriteOpen(true)
   }
 
   return (<>
@@ -77,7 +86,7 @@ function Navbar() {
                 : (<li className={`flex items-center pt-[2px] cursor-pointer ${isAuth ? 'text-[#99AABB]' : 'text-[#D8E0E8]'}`} onClick={() => { setOpenS(!openS); }}>{openS ? <BiX strokeWidth={1} size={20} /> : <BiSearch strokeWidth={1} size={18} />}</li>)
               }
 
-              {isAuth && !openS ? (<div onClick={()=>setIsLogOpen(true)} className='flex mt-[3px]'><div className=' flex gap-2 pr-1 relative justify-center items-center pl-[6px] tracking-wider text-[12px] rounded-l-sm font-semibold py-[2px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>
+              {isAuth && !openS ? (<div onClick={() => setIsLogOpen(true)} className='flex mt-[3px]'><div className=' flex gap-2 pr-1 relative justify-center items-center pl-[6px] tracking-wider text-[12px] rounded-l-sm font-semibold py-[2px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>
                 <PiPlus strokeWidth={15} size={15} />
                 <p>LOG</p>
               </div>
@@ -97,7 +106,8 @@ function Navbar() {
       </div>
     </div>
     <Register isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
-      <SearchForReview isOpen={isLogOpen} onClose={()=>setIsLogOpen(false)}/>
+    <SearchForReview getTheMovie={getTheMovie} isOpen={isLogOpen} onClose={() => setIsLogOpen(false)} />
+    <WriteReview isOpen={isWriteOpen} onClose={()=>setIsWriteOpen(false)} id={movie}/>
 
   </>
   )
