@@ -71,7 +71,7 @@ function UserActivityBar({filim}) {
                 </div>
                 <div className='text-[#bcd]/50 flex flex-col justify-center items-center' onClick={watchlistAMovie}>
                     <IoTimeSharp className={`${intraById?.intra?.isInWatchlist && 'text-[#40BCF4]'}`} size={40} />
-                    <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Watchlist</p>
+                    <p className='text-[12px] graReg tracking-wide text-[#bcd] '>Watchlistt</p>
 
                 </div>
             </div>
