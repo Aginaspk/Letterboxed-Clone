@@ -1,10 +1,12 @@
 import React from 'react'
 import PosterCard from '../PosterCard'
 import { TiHeart } from 'react-icons/ti'
+import { useNavigate } from 'react-router-dom'
 
 function SearchReviewCard({item}) {
+    const navigate = useNavigate();
     return (
-        <div className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] justify-between'>
+        <div onClick={()=>navigate(`/review/${item._id}`)} className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] justify-between'>
             <div className='w-[76px]'>
                 <div className='w-[76px] h-[111px]'>
                     <PosterCard item={item?.movie}/>

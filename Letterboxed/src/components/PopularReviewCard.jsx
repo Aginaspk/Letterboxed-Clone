@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import RatingStar from './RatingStar'
 import { IoChatbox } from 'react-icons/io5'
 import { TiHeart } from 'react-icons/ti'
+import { useNavigate } from 'react-router-dom'
 
 function PopularReviewCard({ item }) {
+    const navigate = useNavigate()
     const parRef = useRef(null);
     const [isMax, setIsMax] = useState(350)
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className='border-b border-[#2C3440] pb-5 mx-[16px] mb-[32px]'>
+        <div onClick={()=>navigate(`/review/${item?._id}`)} className='border-b border-[#2C3440] pb-5 mx-[16px] mb-[32px]'>
             <div className='flex gap-5 mb-5'>
                 <div className='h-[120px] w-[80px] shadow-[rgba(20,24,28,0.25)_0px_0px_1px_1px_inset] border-[#FFEEDD] hover:border-2 hover:border-white hover:rounded-sm '>
                     <img className='h-full w-full rounded-sm' src={item?.movie?.smallPoster} alt="" /></div>

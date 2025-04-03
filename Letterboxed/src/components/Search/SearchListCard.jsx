@@ -1,12 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function SearchListCard({item}) {
+    const navigate = useNavigate()
     const { isAuth, user } = useSelector(state => state.auth)
 
-    const arr = [1, 2, 3, 4, 5]
     return (
-        <div className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] justify-between'>
+        <div onClick={()=>navigate(`/list/${item._id}`)} className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] justify-between'>
             <div className='w-[256px]'>
                 <div className={` flex w-full flex-row items-center h-[111px] rounded-sm border-2 transition-all duration-200 overflow-hidden ${isAuth ? "border-transparent hover:border-white" : "border-transparent hover:border-[#00E054]"}`}>
                     {item?.movies?.map((movie, index) => {

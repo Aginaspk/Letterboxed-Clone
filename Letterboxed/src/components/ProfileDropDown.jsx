@@ -27,19 +27,19 @@ function ProfileDropDown({ user }) {
             </div>
             <div className={`w-full rounded-b-sm absolute left-0 bg-[#8899AA]  border-[#2C3440]/15 overflow-hidden ${isHover ? "h-auto  border-t" : "h-0"}`}>
                 <div className='w-full py-1'>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Home</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Profile</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Filims</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Reviews</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Watchlist</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>List</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Likes</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Tags</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Networks</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Home</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Profile</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Filims</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Reviews</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Watchlist</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>List</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Likes</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Tags</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Networks</p></li>
                 </div>
                 <div className='py-1 border-t border-[#2C3440]/15'>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]'>Settings</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white gra hover:font-medium text-[12px] py-[5px]'><p className=' px-[15px]' onClick={signouUser}>Sign Out</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Settings</p></li>
+                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]' onClick={signouUser}>Sign Out</p></li>
 
                 </div>
             </div>

@@ -11,7 +11,7 @@ function CommentCard({item}) {
             </div>
             <div>
                 <p className='text-[13px] text-[#99AABB]'>Created at {item?.createdAt.split("T")[0]}</p>
-                <p className='text-[13px] text-[#99AABB] mt-[15px]'>{item?.comment}</p>
+                <p className='text-[13px] text-[#99AABB] mt-[15px]'>{item?.comment || item?.text}</p>
             </div>
 
         </div>

@@ -16,6 +16,8 @@ import ListPage from './pages/ListPage.jsx'
 import ViewList from './pages/ViewList.jsx'
 import Members from './pages/Members.jsx'
 import SeacrhPage from './pages/SeacrhPage.jsx'
+import CreateList from './pages/CreateList.jsx'
+import ViewReview from './pages/ViewReview.jsx'
 
 
 const router = createBrowserRouter([
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
       {
         path:'/search/:searchText',
         element:<SeacrhPage/>
+      },
+      {
+        path:'/new-list',
+        element:<CreateList/>
+      },
+      {
+        path:'/review/:id',
+        element:<ViewReview/>
       }
 
     ]

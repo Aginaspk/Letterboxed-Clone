@@ -90,6 +90,20 @@ export const isUserLiked = createAsyncThunk(
     }
   }
 );
+export const createList = createAsyncThunk(
+  "lists/createList",
+  async (list, { rejectWithValue }) => {
+    try {
+      console.log(list)
+      const { data } = await api.post(`/user/createList`,list);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 const listsSlice = createSlice({
   name: "lists",
   initialState: INITIAL_STATE,

@@ -1,9 +1,10 @@
 import React from 'react'
 import RatingStar from './RatingStar'
 import { HiMenuAlt2 } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
 
 function ReviewCard({ item }) {
-
+  const navigate = useNavigate();
   const formatDate = (isoString) => {
     const date = new Date(isoString);
     return date.toLocaleString("en-US", { month: "short", day: "2-digit" });
@@ -11,7 +12,7 @@ function ReviewCard({ item }) {
 
   const date = formatDate(item?.createdAt)
 
-  return (<div>
+  return (<div onClick={()=>navigate(`/review/${item?._id}`)}>
     <div className='rounded-sm shadow-[inset_0_0_1px_1px_rgba(20,24,28,0.125)] hover:border-2 hover:border-white' >
       <img className='rounded-t-sm' src={item?.movie?.smallPoster} alt="" />
       <div className='w-full rounded-b-sm bg-[#445566] gap-1 h-7 flex items-center px-2'>

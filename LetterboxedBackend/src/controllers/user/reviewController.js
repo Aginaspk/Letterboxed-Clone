@@ -101,14 +101,13 @@ const getPopReviewById = async (req, res) => {
 };
 
 const writeAReview = async (req, res) => {
-  const { movieId, rating, reviewText } = req.body;
+  const { movieId, rating, reviewText, isLiked } = req.body;
   const userId = req.user.id;
 
   if (!userId || !movieId) {
     return res.status(400).json({ message: "userId and movieId are required" });
   }
 
-  // Validate ObjectIds
   if (
     !mongoose.Types.ObjectId.isValid(userId) ||
     !mongoose.Types.ObjectId.isValid(movieId)
@@ -116,46 +115,42 @@ const writeAReview = async (req, res) => {
     return res.status(400).json({ message: "Invalid userId or movieId" });
   }
 
-  // Prepare review update data
   const reviewUpdateData = {};
   if (rating !== undefined)
     reviewUpdateData.rating = Math.min(Math.max(rating, 0), 5);
   if (reviewText !== undefined) reviewUpdateData.reviewText = reviewText;
 
-  // Prepare MovieUserInteraction update data
   const interactionUpdateData = {
     user: userId,
     movie: movieId,
-    watchedAt: new Date(), // Set watchedAt since writing a review implies watching
+    watchedAt: new Date(),
+    likedAt: isLiked ? new Date() : null, 
   };
   if (rating !== undefined)
     interactionUpdateData.rating = Math.min(Math.max(rating, 0), 5);
-  // If liking the movie (not the review) is implied, uncomment below
-  // interactionUpdateData.likedAt = new Date();
 
-  // Start a session for atomic updates
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
-    // Check if a review already exists
-    const existingReview = await reviewSchema.findOne({
-      user: userId,
-      movie: movieId,
-    }).session(session);
+    const existingReview = await reviewSchema
+      .findOne({
+        user: userId,
+        movie: movieId,
+      })
+      .session(session);
 
     let reviewResponse;
     if (existingReview) {
-      // Update existing review
-      reviewResponse = await reviewSchema.findOneAndUpdate(
-        { user: userId, movie: movieId },
-        { $set: reviewUpdateData },
-        { new: true, runValidators: true, session }
-      )
+      reviewResponse = await reviewSchema
+        .findOneAndUpdate(
+          { user: userId, movie: movieId },
+          { $set: reviewUpdateData },
+          { new: true, runValidators: true, session }
+        )
         .populate("movie", "title")
         .populate("user", "userName");
     } else {
-      // Create new review
       const reviewData = {
         user: userId,
         movie: movieId,
@@ -165,23 +160,21 @@ const writeAReview = async (req, res) => {
       };
       const newReview = new reviewSchema(reviewData);
       await newReview.save({ session });
-      reviewResponse = await reviewSchema.findById(newReview._id)
+      reviewResponse = await reviewSchema
+        .findById(newReview._id)
         .session(session)
         .populate("movie", "title")
         .populate("user", "userName");
     }
 
-    // Update or create MovieUserInteraction
     await movieanduserSchema.findOneAndUpdate(
       { user: userId, movie: movieId },
       { $set: interactionUpdateData },
-      { upsert: true, new: true, runValidators: true, session } // Upsert creates if not exists
+      { upsert: true, new: true, runValidators: true, session }
     );
 
-    // Commit the transaction
     await session.commitTransaction();
 
-    // Prepare response
     res.status(existingReview ? 200 : 201).json({
       message: existingReview
         ? "Review updated successfully"
@@ -199,12 +192,24 @@ const writeAReview = async (req, res) => {
       },
     });
   } catch (error) {
-    // Rollback on error
     await session.abortTransaction();
     throw error;
   } finally {
     session.endSession();
   }
+};
+
+const getReviewById = async (req, res) => {
+  const { id } = req.params;
+  const movie = await reviewSchema.findById(id)
+  .populate("movie","title smallPoster releaseYear bigPoster")
+  .populate("user","userName profilePic")
+  .populate("comments.user","userName")
+  
+
+  res.status(200).json({
+    data: movie,
+  });
 };
 export {
   getNewReviews,
@@ -212,4 +217,5 @@ export {
   avgRatingAndCount,
   getPopReviewById,
   writeAReview,
+  getReviewById
 };

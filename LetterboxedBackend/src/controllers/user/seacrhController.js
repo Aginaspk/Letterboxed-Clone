@@ -73,7 +73,7 @@ const searchMovie = async (req, res, next) => {
   const regex = new RegExp(searchText, "i");
   const movie = await movieSchema
     .find({ title: regex })
-    .select("title releaseYear director _id ");
+    .select("title releaseYear director _id smallPoster");
 
   if (!movie) {
     return res.status(200).json({

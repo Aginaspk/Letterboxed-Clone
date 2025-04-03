@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   popularReviews: {},
   avg:{},
   popReviewById:{},
+  reviewById:{},
   loading: false,
   error: null,
 };
@@ -67,9 +68,22 @@ export const getPopReviewsById = createAsyncThunk(
 );
 export const writeReview = createAsyncThunk(
   "review/writeReview",
+  async (review, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/user/writeReview`,review);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const getReviewById = createAsyncThunk(
+  "review/getReviewById",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await api.get(`/user/popReviewById/${id}`);
+      const { data } = await api.get(`/user/getReview/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -128,6 +142,17 @@ const reviewSlice = createSlice({
         state.popReviewById = action.payload;
       })
       .addCase(getPopReviewsById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getReviewById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getReviewById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.reviewById = action.payload;
+      })
+      .addCase(getReviewById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

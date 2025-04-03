@@ -15,10 +15,11 @@ function UserActivityBar({filim}) {
 
     console.log(typeof(intraById?.intra?.rating))
     let val = intraById?.intra?.rating;
+    console.log(filim)
 
     useEffect(()=>{
         dispatch(getIntraById(filim))
-    },[like,watch,watchlist,rating])
+    },[like,watch,watchlist,rating,filim])
 
 
 

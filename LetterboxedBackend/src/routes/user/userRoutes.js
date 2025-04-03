@@ -17,8 +17,9 @@ import {
   getPopReviewById,
   getPopularOfTheWeek,
   writeAReview,
+  getReviewById
 } from "../../controllers/user/reviewController.js";
-import { getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLiked, likeALsit } from "../../controllers/user/listController.js";
+import { createList, getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLiked, likeALsit } from "../../controllers/user/listController.js";
 import { getNewNews } from "../../controllers/user/newsController.js";
 import { getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers } from "../../controllers/user/memberController.js";
 import { verifyUser } from "../../middlewares/authentication.js";
@@ -45,6 +46,7 @@ routes
   .get('/getListById/:listId',trycatch(getListById))
   .get('/seacrh/:searchText',trycatch(searchAllCollections))
   .get('/seacrhMovie/:searchText',trycatch(searchMovie))
+  .get('/getReview/:id',trycatch(getReviewById))
   .post('/likeMovie',verifyUser,trycatch(likeMovie))
   .post('/getIntra',verifyUser,trycatch(getIntraById))
   .post('/watchMovie',verifyUser,trycatch(watchMovie))
@@ -53,5 +55,6 @@ routes
   .post('/likeList',verifyUser,trycatch(likeALsit))
   .post('/isLiked',verifyUser,trycatch(isUserLiked))
   .post('/writeReview',verifyUser,trycatch(writeAReview))
+  .post('/createList',verifyUser,trycatch(createList))
 
 export default routes;

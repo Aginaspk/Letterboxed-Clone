@@ -6,6 +6,7 @@ import { getMovieById } from '../redux/movieSlice';
 import PosterCard from '../components/PosterCard';
 import { Rating, Stack } from '@mui/material';
 import { IoHeartSharp } from 'react-icons/io5';
+import { writeReview } from '../redux/reviewSlice';
 
 function WriteReview({ isOpen, onClose, id }) {
     const dispatch = useDispatch();
@@ -18,15 +19,23 @@ function WriteReview({ isOpen, onClose, id }) {
         dispatch(getMovieById(id))
     }, [dispatch, id])
 
-    const postReview = () =>{
+    const postReview = async() =>{
         const rev = {
-            movie:id,
-            rate,
-            like,
+            movieId:id,
+            rating:rate,
+            isLiked:like,
             isChecked,
-            review
+            reviewText:review
         }
         console.log(rev)
+
+        try {
+            const res = await dispatch(writeReview(rev)).unwrap();
+            alert("review written successfully")
+            onClose()
+        } catch (error) {
+            alert(error)
+        }
     }
     return (
         <dialog open={isOpen} id="my_modal_3" className="modal bg-black/90">

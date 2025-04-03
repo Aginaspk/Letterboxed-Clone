@@ -171,42 +171,42 @@ const getListById = async (req, res, next) => {
 };
 
 const likeALsit = async (req, res, next) => {
-  const userId = req.user?.id; 
-    const { listId } = req.body;
+  const userId = req.user?.id;
+  const { listId } = req.body;
 
-    if (!userId || !listId) {
-      return next(new CustomError("No user or list found", 400));
-    }
+  if (!userId || !listId) {
+    return next(new CustomError("No user or list found", 400));
+  }
 
-    const movieList = await listSchema.findById(listId);
+  const movieList = await listSchema.findById(listId);
 
-    if (!movieList) {
-      return res.status(404).json({ message: "Movie list not found" });
-    }
+  if (!movieList) {
+    return res.status(404).json({ message: "Movie list not found" });
+  }
 
-    movieList.likes = movieList.likes.filter(like => like !== null);
+  movieList.likes = movieList.likes.filter((like) => like !== null);
 
-    const userIdString = userId.toString();
-    const existingLikeIndex = movieList.likes.findIndex(
-      (like) => like?.user?.toString() === userIdString
-    );
+  const userIdString = userId.toString();
+  const existingLikeIndex = movieList.likes.findIndex(
+    (like) => like?.user?.toString() === userIdString
+  );
 
-    if (existingLikeIndex === -1) {
-      movieList.likes.push({
-        user: userId, 
-        likedAt: new Date() 
-      });
-    } else {
-      movieList.likes.splice(existingLikeIndex, 1);
-    }
-
-    await movieList.save();
-
-    return res.status(200).json({
-      message: "Like updated successfully",
-      likesCount: movieList.likes.length,
-      isLiked: existingLikeIndex === -1,
+  if (existingLikeIndex === -1) {
+    movieList.likes.push({
+      user: userId,
+      likedAt: new Date(),
     });
+  } else {
+    movieList.likes.splice(existingLikeIndex, 1);
+  }
+
+  await movieList.save();
+
+  return res.status(200).json({
+    message: "Like updated successfully",
+    likesCount: movieList.likes.length,
+    isLiked: existingLikeIndex === -1,
+  });
 };
 
 const isUserLiked = async (req, res, next) => {
@@ -236,11 +236,57 @@ const isUserLiked = async (req, res, next) => {
   });
 };
 
+const createList = async (req, res) => {
+  const { title, description, movies, isPublic } = req.body;
+
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized: Please login to create a list",
+    });
+  }
+
+  if (!title) {
+    return res.status(400).json({
+      success: false,
+      message: "Title is required",
+    });
+  }
+
+  if (!movies || !Array.isArray(movies) || movies.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "At least one movie is required",
+    });
+  }
+
+  const newList = new listSchema({
+    title,
+    description: description || "", 
+    user: req.user.id,
+    movies,
+    isPublic: isPublic !== undefined ? isPublic : true, 
+  });
+
+  const savedList = await newList.save();
+
+  const populatedList = await listSchema.findById(savedList._id)
+    .populate("user", "username email") 
+    .populate("movies", "title releaseDate"); 
+
+  return res.status(201).json({
+    success: true,
+    message: "Movie list created successfully",
+    data: populatedList,
+  });
+};
+
 export {
   getPopularLists,
   getPopOfWeek,
   getRecentlyLiked,
   getListById,
   likeALsit,
-  isUserLiked
+  isUserLiked,
+  createList
 };
