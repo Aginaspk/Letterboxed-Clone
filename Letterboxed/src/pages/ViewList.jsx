@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListById, isUserLiked, likeAList } from '../redux/listsSlice'
+import { addListComment, getListById, isUserLiked, likeAList } from '../redux/listsSlice'
 import { useParams } from 'react-router-dom'
 import { IoFlag } from 'react-icons/io5'
 import PosterCard from '../components/PosterCard'
@@ -11,6 +11,7 @@ function ViewList() {
   const dispatch = useDispatch()
   const { listId } = useParams()
   const [like, setLike] = useState(false);
+  const [comment, setComment] = useState('')
   const { listById } = useSelector(state => state.lists)
   const { isLiked } = useSelector(state => state.lists)
   const { isAuth, user } = useSelector(state => state.auth)
@@ -33,6 +34,20 @@ function ViewList() {
     try {
       const res = await dispatch(likeAList(listId)).unwrap();
       setLike(!like)
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  const addComment = async () => {
+    const commentData = {
+      listId,
+      text: comment,
+    }
+    try {
+      const res = await dispatch(addListComment(commentData)).unwrap();
+      dispatch(getListById(listId));
+      setComment("")
     } catch (error) {
       alert(error)
     }
@@ -73,6 +88,15 @@ function ViewList() {
           {listById?.data?.comments?.map((item, index) => {
             return <CommentCard item={item} />
           })}
+          <div className='w-full flex justify-end border-t border-[#456] py-[20px]'>
+            <div className='w-[470px] flex flex-col items-end gap-5'>
+              <textarea onChange={(e) => setComment(e.target.value)} name="" id="" className='w-full h-[100px] mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] shadow-[inset_0_-1px_#456]'></textarea>
+              <button onClick={addComment} value={comment} type='submit'
+                className='px-[12px] tracking-widest text-[13px] rounded-sm font-semibold py-[6px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>POST</button>
+
+            </div>
+
+          </div>
 
 
         </div>

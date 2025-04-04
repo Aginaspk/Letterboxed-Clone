@@ -124,7 +124,7 @@ const writeAReview = async (req, res) => {
     user: userId,
     movie: movieId,
     watchedAt: new Date(),
-    likedAt: isLiked ? new Date() : null, 
+    likedAt: isLiked ? new Date() : null,
   };
   if (rating !== undefined)
     interactionUpdateData.rating = Math.min(Math.max(rating, 0), 5);
@@ -201,14 +201,52 @@ const writeAReview = async (req, res) => {
 
 const getReviewById = async (req, res) => {
   const { id } = req.params;
-  const movie = await reviewSchema.findById(id)
-  .populate("movie","title smallPoster releaseYear bigPoster")
-  .populate("user","userName profilePic")
-  .populate("comments.user","userName")
-  
+  const movie = await reviewSchema
+    .findById(id)
+    .populate("movie", "title smallPoster releaseYear bigPoster")
+    .populate("user", "userName profilePic")
+    .populate("comments.user", "userName");
 
   res.status(200).json({
     data: movie,
+  });
+};
+
+const addCommentToReview = async (req, res) => {
+  const { reviewId, text } = req.body;
+  const userId = req.user.id; 
+
+  if (!reviewId || !text) {
+    return res.status(400).json({
+      success: false,
+      message: "Review ID and comment text are required",
+    });
+  }
+
+  const review = await reviewSchema.findById(reviewId);
+  if (!review) {
+    return res.status(404).json({
+      success: false,
+      message: "Review not found",
+    });
+  }
+
+  const newComment = {
+    user: userId,
+    text,
+    createdAt: new Date(),
+  };
+
+  review.comments.push(newComment);
+
+  const updatedReview = await review.save();
+
+  await updatedReview.populate("comments.user", "username");
+
+  res.status(201).json({
+    success: true,
+    message: "Comment added successfully",
+    data: updatedReview,
   });
 };
 export {
@@ -217,5 +255,6 @@ export {
   avgRatingAndCount,
   getPopReviewById,
   writeAReview,
-  getReviewById
+  getReviewById,
+  addCommentToReview
 };

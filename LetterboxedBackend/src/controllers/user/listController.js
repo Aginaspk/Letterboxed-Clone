@@ -262,22 +262,61 @@ const createList = async (req, res) => {
 
   const newList = new listSchema({
     title,
-    description: description || "", 
+    description: description || "",
     user: req.user.id,
     movies,
-    isPublic: isPublic !== undefined ? isPublic : true, 
+    isPublic: isPublic !== undefined ? isPublic : true,
   });
 
   const savedList = await newList.save();
 
-  const populatedList = await listSchema.findById(savedList._id)
-    .populate("user", "username email") 
-    .populate("movies", "title releaseDate"); 
+  const populatedList = await listSchema
+    .findById(savedList._id)
+    .populate("user", "username email")
+    .populate("movies", "title releaseDate");
 
   return res.status(201).json({
     success: true,
     message: "Movie list created successfully",
     data: populatedList,
+  });
+};
+
+const addCommentToList = async (req, res) => {
+  const { listId, text } = req.body;
+  const userId = req.user.id;
+
+  if (!listId || !text) {
+    return res.status(400).json({
+      success: false,
+      message: "Review ID and comment text are required",
+    });
+  }
+
+  const list = await listSchema.findById(listId);
+  if (!list) {
+    return res.status(404).json({
+      success: false,
+      message: "list not found",
+    });
+  }
+
+  const newComment = {
+    user: userId,
+    comment:text,
+    createdAt: new Date(),
+  };
+
+  list.comments.push(newComment);
+
+  const updatedList = await list.save();
+
+  await updatedList.populate("comments.user", "username");
+
+  res.status(201).json({
+    success: true,
+    message: "Comment added successfully",
+    data: updatedList,
   });
 };
 
@@ -288,5 +327,6 @@ export {
   getListById,
   likeALsit,
   isUserLiked,
-  createList
+  createList,
+  addCommentToList
 };

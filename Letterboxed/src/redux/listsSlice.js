@@ -104,6 +104,20 @@ export const createList = createAsyncThunk(
     }
   }
 );
+
+export const addListComment = createAsyncThunk(
+  "review/addListComment",
+  async (comment, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/user/addCommnetToList`,comment);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 const listsSlice = createSlice({
   name: "lists",
   initialState: INITIAL_STATE,

@@ -92,6 +92,19 @@ export const getReviewById = createAsyncThunk(
     }
   }
 );
+export const addReviewComment = createAsyncThunk(
+  "review/addReviewComment",
+  async (comment, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post(`/user/addCommnetToReview`,comment);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 
 

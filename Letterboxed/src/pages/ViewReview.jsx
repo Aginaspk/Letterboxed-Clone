@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getReviewById } from '../redux/reviewSlice';
+import { addReviewComment, getReviewById } from '../redux/reviewSlice';
 import RatingStar from '../components/RatingStar';
 import CommentCard from '../components/CommentCard';
 import { Rating, Stack } from '@mui/material';
@@ -10,6 +10,7 @@ import UserActivityBar from '../components/filims/UserActivityBar';
 function ViewReview() {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const [comment, setComment] = useState('')
     const { isNavHover } = useSelector(state => state.globState)
     const { reviewById } = useSelector(state => state.review)
     console.log(reviewById)
@@ -17,7 +18,19 @@ function ViewReview() {
         dispatch(getReviewById(id))
     }, [dispatch, id])
 
-
+    const addComment = async () => {
+        const commentData = {
+            reviewId: id,
+            text: comment,
+        }
+        try {
+            const res = await dispatch(addReviewComment(commentData)).unwrap();
+            dispatch(getReviewById(id));
+            setComment("")
+        } catch (error) {
+            alert(error)
+        }
+    }
 
     return (
         <div className='w-full flex flex-col items-center xl:relative bg-[#14181C] relative '>
@@ -33,34 +46,38 @@ function ViewReview() {
 
             <div className='w-[950px] h-[500px]'></div>
             <div className='w-[950px] z-50 flex justify-between'>
-                <div className='w-[156px] '>
-                    <div className='h-[231px] w-full shadow-[inset_0_0_1px_1px_rgba(20,24,28,0.25)]'>
-                        <img className='h-full w-full rounded-md border border-white/15' src={reviewById?.data?.movie?.smallPoster} alt="" />
-                    </div>
-                    <img src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1742539950/file-1730249020574_qp5ijo.png" alt="" className='mb-[50px] mt-[20px]' />
-
-                </div>
-                <div className='w-[470px]'>
-                    <div className='flex border-b border-[#456] mb-[15px]'>
-                        <div className='w-[24px] h-[24px] rounded-full overflow-hidden'>
-                            <img className='w-full h-full' src={reviewById?.data?.user?.profilePic ? reviewById?.data?.user?.profilePic : "https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png"} alt="" />
+                <div className='w-[670px]'>
+                    <div className='flex w-full justify-between'>
+                        <div className='w-[156px] '>
+                            <div className='h-[231px] w-full shadow-[inset_0_0_1px_1px_rgba(20,24,28,0.25)]'>
+                                <img className='h-full w-full rounded-md border border-white/15' src={reviewById?.data?.movie?.smallPoster} alt="" />
+                            </div>
 
                         </div>
-                        <h1 className='text-[14px] text-[#AABBCC] font-bold gra ml-2 pb-3'><span className='text-[12px] gra text-[#778899] font-bold mr-1 pt-[1px]'>Review By </span>{reviewById?.data?.user?.userName}</h1>
-                    </div>
-                    <div className='flex flex-wrap items-center gap-x-[10px] gap-y-0 mb-[10px]'>
-                        <h1 className='text-[25px] intr font-black tracking-wide'>{reviewById?.data?.movie?.title}</h1>
-                        <div className='flex gap-[10px]'>
-                            <h2 className='text-[17px] mt-1 graReg  text-[#8899AA] tracking-wider font-light '>{reviewById?.data?.movie?.releaseYear}</h2>
+                        <div className='w-[470px]'>
+                            <div className='flex border-b border-[#456] mb-[15px]'>
+                                <div className='w-[24px] h-[24px] rounded-full overflow-hidden'>
+                                    <img className='w-full h-full' src={reviewById?.data?.user?.profilePic ? reviewById?.data?.user?.profilePic : "https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png"} alt="" />
+
+                                </div>
+                                <h1 className='text-[14px] text-[#AABBCC] font-bold gra ml-2 pb-3'><span className='text-[12px] gra text-[#778899] font-bold mr-1 pt-[1px]'>Review By </span>{reviewById?.data?.user?.userName}</h1>
+                            </div>
+                            <div className='flex flex-wrap items-center gap-x-[10px] gap-y-0 mb-[10px]'>
+                                <h1 className='text-[25px] intr font-black tracking-wide'>{reviewById?.data?.movie?.title}</h1>
+                                <div className='flex gap-[10px]'>
+                                    <h2 className='text-[17px] mt-1 graReg  text-[#8899AA] tracking-wider font-light '>{reviewById?.data?.movie?.releaseYear}</h2>
+                                </div>
+                            </div>
+                            <div className='mb-[10px]'>
+                                <Stack spacing={1} >
+                                    <Rating name="half-rating" value={Number(reviewById?.data?.rating)} precision={0.5} readOnly sx={{ color: "#00C030", fontSize: "16px" }} />
+                                </Stack>
+                            </div>
+                            <div>
+                                <p className='text-[18px] lora text-[#99AABB]'>{reviewById?.data?.reviewText}</p>
+                            </div>
+
                         </div>
-                    </div>
-                    <div className='mb-[10px]'>
-                        <Stack spacing={1} >
-                            <Rating name="half-rating" value={Number(reviewById?.data?.rating)} precision={0.5} readOnly sx={{ color: "#00C030", fontSize: "16px" }}  />
-                        </Stack>
-                    </div>
-                    <div>
-                        <p className='text-[18px] lora text-[#99AABB]'>{reviewById?.data?.reviewText}</p>
                     </div>
                     <div className='mt-[50px]'>
                         <h1 className='w-full pb-[5px] border-b mb-[10px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] gra'>{reviewById?.data?.comments?.length} COMMENTS</h1>
@@ -68,10 +85,21 @@ function ViewReview() {
                             return <CommentCard item={item} />
                         })}
                     </div>
+                    <div className='w-full flex justify-end border-t border-[#456] py-[20px]'>
+                        <div className='w-[470px] flex flex-col items-end gap-5'>
+                            <textarea onChange={(e) => setComment(e.target.value)} name="" id="" className='w-full h-[100px] mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] shadow-[inset_0_-1px_#456]'></textarea>
+                            <button onClick={addComment} value={comment} type='submit'
+                                className='px-[12px] tracking-widest text-[13px] rounded-sm font-semibold py-[6px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>POST</button>
+
+                        </div>
+
+                    </div>
                 </div>
                 <div className='w-[230px]'>
                     <p className='text-[14px] graReg pt-[16px] px-[20px] pb-[18px] mb-[20px] bg-[#445566]'>{reviewById?.data?.user?.userName}🎞 is using Letterboxd to share film reviews and lists with friends. Join here.</p>
-                    <UserActivityBar filim={reviewById?.data?.movie?._id}/>
+                    <UserActivityBar filim={reviewById?.data?.movie?._id} />
+                    <img src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1742539950/file-1730249020574_qp5ijo.png" alt="" className='mb-[50px] mt-[20px]' />
+
                 </div>
             </div>
 
