@@ -1,4 +1,4 @@
-import joi, { required } from "joi";
+import joi from "joi";
 
 const joiUserSchema = joi.object({
   userName: joi.string().required(),
@@ -29,6 +29,10 @@ const joiUserLogin = joi.object({
   userName: joi.string().required(),
   password: joi.string().required(),
 });
+const joiAdminLogin = joi.object({
+  userName: joi.string().required(),
+  password: joi.string().required(),
+});
 const joiNewPassword = joi.object({
   password: joi
     .string()
@@ -54,8 +58,7 @@ const joiMovieScema = joi.object({
   genre: joi.string().trim().required(),
   director: joi.string().required(),
   cast: joi.string().trim().required(),
-  smallPoster: joi.string().required(),
-  bigPoster: joi.string().required(),
   description: joi.string().required(),
+  smallDescription: joi.string().required(),
 })
-export { joiUserLogin, joiUserSchema, joiNewPassword,joiMovieScema };
+export { joiUserLogin, joiUserSchema, joiNewPassword,joiMovieScema,joiAdminLogin };

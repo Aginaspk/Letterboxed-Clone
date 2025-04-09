@@ -4,11 +4,16 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRoute from "./routes/user/userRoutes.js";
 import userAuth from "./routes/user/userAuthRoutes.js";
+import adminAuth from './routes/admin/adminAuthRoutes.js'
+import adminRoute from './routes/admin/adminRoutes.js'
 import cookieParser from "cookie-parser";
 import manageError from "./middlewares/manageError.js";
+import connectCloudinary from "./config/cloudinary.js";
 
-dotenv.config();
 const app = express();
+dotenv.config();
+
+connectCloudinary();
 
 app.use(
   cors({
@@ -18,12 +23,15 @@ app.use(
 );
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(express.urlencoded({extended:true}))
 app.get("/", (req, res) => {
   res.json({ message: "server is running" });
 });
 app.use("/user", userRoute);
 app.use("/authUser", userAuth);
+app.use("/authAdmin",adminAuth);
+app.use('/admin',adminRoute)
 
 mongoose
   .connect(process.env.MONGODB_URL)

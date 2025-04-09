@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema(
     profilePic: { type: String, default: "" },
     bio: { type: String, default: "" },
     isAdmin: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     resetPasswordToken: { type: String },

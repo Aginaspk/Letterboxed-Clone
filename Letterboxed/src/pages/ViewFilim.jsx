@@ -66,7 +66,7 @@ function ViewFilim() {
           </div>
           <div className='w-[670px] flex justify-between'>
             <div className='w-[390px]'>
-              <h4 className='gra font-semibold text-[13px] tracking-wider mb-[10px] text-[#99AABB]'>LONG LIVE THE FIGHTERS</h4>
+              <h4 className='graReg uppercase text-[13px] tracking-wider mb-[10px] text-[#99AABB]'>{movie?.data?.smallDescription ? movie?.data?.smallDescription : "LONG LIVE THE FIGHTERS"}</h4>
               <p className='lora text-[18px] tracking-wide font-medium text-[#99AABB] mb-[35px]'>{movie?.data?.description}</p>
               <div className='w-full'>
                 <img src="https://res.cloudinary.com/dup1lh7xk/image/upload/v1742546192/file-1730249065821_ecfvuv.png" alt="" />
