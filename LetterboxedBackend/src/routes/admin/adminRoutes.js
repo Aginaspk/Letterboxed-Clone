@@ -7,7 +7,7 @@ import {
 } from "../../controllers/admin/adminMovieController.js";
 import upload from "../../middlewares/multer.js";
 import { blockUser, getAllUsers, getUserById } from "../../controllers/admin/adminUserController.js";
-import { getAllReviews } from "../../controllers/admin/adminReviewController.js";
+import { getAllReviews, getRevById, getRevByMovie, getRevByUser } from "../../controllers/admin/adminReviewController.js";
 
 const routes = express.Router();
 
@@ -38,5 +38,8 @@ routes
 
 
   .get('/reviews',verifyAdmin,trycatch(getAllReviews))
+  .get('/review-by-id/:id',verifyAdmin,trycatch(getRevById))
+  .get('/reviews-by-user/:id',verifyAdmin,trycatch(getRevByUser))
+  .get('/reviews-by-movie/:id',verifyAdmin,trycatch(getRevByMovie))
 
 export default routes;
