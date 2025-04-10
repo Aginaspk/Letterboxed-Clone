@@ -46,7 +46,7 @@ function Home() {
       <div className='w-full flex justify-center'>
         <div className='xl:w-[950px] '>
           {isAuth && <>
-            <h1 className='text-[26px] text-center mb-[32px] text-[#AABBCC] tracking-wide font-[200]'>Welcome back, <span className='text-white font-[200]'>{user.userName}.</span> Here’s what we’ve been watching…</h1>
+            <h1 className='text-[26px] text-center mb-[32px] text-[#AABBCC] tracking-wide font-[200]'>Welcome back, <span className='text-white font-[200]'>{user?.userName}.</span> Here’s what we’ve been watching…</h1>
             <p className='text-[15px] text-center mt-[-20px] mb-[35px] text-[#99AABB]'>This homepage will become customized as you <span className='text-white'>follow active members</span> on Letterboxd.</p>
             <h1 className='w-full pb-[5px] border-b mb-[10px] border-[#456] text-[#9AB] text-[12px] tracking-[0.075em] graReg'>NEW ON LETTERBOXD</h1>
             <div className='grid grid-cols-6 gap-2 pb-[40px]'>

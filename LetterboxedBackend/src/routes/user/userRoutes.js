@@ -22,7 +22,7 @@ import {
 } from "../../controllers/user/reviewController.js";
 import { addCommentToList, createList, getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLiked, likeALsit } from "../../controllers/user/listController.js";
 import { getNewNews } from "../../controllers/user/newsController.js";
-import { getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers } from "../../controllers/user/memberController.js";
+import { getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers, toggleFollowUser } from "../../controllers/user/memberController.js";
 import { verifyUser } from "../../middlewares/authentication.js";
 import { searchAllCollections, searchMovie } from "../../controllers/user/seacrhController.js";
 
@@ -59,5 +59,6 @@ routes
   .post('/createList',verifyUser,trycatch(createList))
   .post('/addCommnetToReview',verifyUser,trycatch(addCommentToReview))
   .post('/addCommnetToList',verifyUser,trycatch(addCommentToList))
+  .post('/toggle-follow-user/:userId',verifyUser,trycatch(toggleFollowUser))
 
 export default routes;

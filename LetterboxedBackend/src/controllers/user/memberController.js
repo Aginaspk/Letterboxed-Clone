@@ -1,5 +1,6 @@
 import Review from "../../models/schema/reviewSchema.js";
 import userSchema from "../../models/schema/userSchema.js";
+import CustomError from "../../utils/customeError.js";
 
 const getPopReviwers = async (req, res) => {
   const popularReviewersByLikes = await Review.aggregate([
@@ -138,12 +139,59 @@ const getPopMemberOfTheWeek = async (req, res) => {
   });
 };
 
-const getAllMemebrs = async(req,res)=>{
+const getAllMemebrs = async (req, res) => {
   const members = await userSchema.find();
 
   res.status(200).json({
-    data:members
-  })
-}
+    data: members,
+  });
+};
 
-export { getPopReviwers,getPopMemberOfTheWeek,getAllMemebrs };
+const toggleFollowUser = async (req, res,next) => {
+  const { userId } = req.params; 
+  const currentUserId = req.user.id;
+
+  if (userId === currentUserId) {
+    return next(new CustomError("You cannot follow yourself", 400));
+  }
+
+  const currentUser = await userSchema.findById(currentUserId);
+  const targetUser = await userSchema.findById(userId);
+
+  if (!targetUser) {
+    return next(new CustomError("User to follow not found", 404));
+  }
+  if (!currentUser) {
+    return next(new CustomError("Current user not found", 404));
+  }
+
+  const isFollowing = currentUser.following.includes(userId);
+
+  if (isFollowing) {
+    await userSchema.findByIdAndUpdate(
+      currentUserId,
+      { $pull: { following: userId } },
+      { new: true }
+    );
+    await userSchema.findByIdAndUpdate(
+      userId,
+      { $pull: { followers: currentUserId } },
+      { new: true }
+    );
+    return res.status(200).json({ message: "User unfollowed successfully" });
+  } else {
+    await userSchema.findByIdAndUpdate(
+      currentUserId,
+      { $push: { following: userId } },
+      { new: true }
+    );
+    await userSchema.findByIdAndUpdate(
+      userId,
+      { $push: { followers: currentUserId } },
+      { new: true }
+    );
+    return res.status(200).json({ message: "User followed successfully" });
+  }
+};
+
+export { getPopReviwers, getPopMemberOfTheWeek, getAllMemebrs,toggleFollowUser };

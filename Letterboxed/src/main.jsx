@@ -18,6 +18,9 @@ import Members from './pages/Members.jsx'
 import SeacrhPage from './pages/SeacrhPage.jsx'
 import CreateList from './pages/CreateList.jsx'
 import ViewReview from './pages/ViewReview.jsx'
+import AdminLogin from './auth/AdminLogin.jsx'
+import AdminHome from './pages/admin/AdminHome.jsx'
+import Movies from './pages/admin/Movies.jsx'
 
 
 const router = createBrowserRouter([
@@ -75,7 +78,22 @@ const router = createBrowserRouter([
   {
     path: '/reset-password',
     element: <ResetPass />
+  },
+  {
+    path:'/admin-login',
+    element:<AdminLogin/>
+  },
+  {
+    path:'/admin-home',
+    element:<AdminHome/>,
+    children:[
+      {
+        index:true,
+        element:<Movies/>
+      }
+    ]
   }
+
 ])
 
 createRoot(document.getElementById('root')).render(

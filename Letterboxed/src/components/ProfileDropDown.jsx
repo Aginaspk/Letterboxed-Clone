@@ -22,7 +22,7 @@ function ProfileDropDown({ user }) {
                 <div className='w-[24px] h-[24px] flex items-center rounded-full overflow-hidden border border-[#99AABB] shadow-[0_0_2px_rgba(0,0,0,0.2)] mr-2'>
                     <img className='object-cover' src={user?.pic ? user?.pic : "https://s.ltrbxd.com/static/img/avatar48-DSi8lXxI.png"} alt="" />
                 </div>
-                <p className={`text-[13px] tracking-widest font-[795] h-4 text-[#99AABB] ${isHover && "text-white"} cursor-pointer uppercase gra`}>{user.userName}</p>
+                <p className={`text-[13px] tracking-widest font-[795] h-4 text-[#99AABB] ${isHover && "text-white"} cursor-pointer uppercase gra`}>{user?.userName}</p>
                 <MdKeyboardArrowDown size={20} />
             </div>
             <div className={`w-full rounded-b-sm absolute left-0 bg-[#8899AA]  border-[#2C3440]/15 overflow-hidden ${isHover ? "h-auto  border-t" : "h-0"}`}>

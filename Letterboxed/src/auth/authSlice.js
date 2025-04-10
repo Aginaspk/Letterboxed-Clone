@@ -39,6 +39,19 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const loginAdmin = createAsyncThunk(
+  "auth/loginUser",
+  async (adminData, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post("/authAdmin/loginAdmin", adminData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 export const logOutUser = createAsyncThunk(
   "auth/logOutUser",

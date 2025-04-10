@@ -21,7 +21,7 @@ const adminLogin = async (req, res, next) => {
   const { userName, password } = value;
   const userData = await userSchema.findOne({ userName, isAdmin: true });
   if (!userData) {
-    return next(new CustomError("User not found", 404));
+    return next(new CustomError("Unautherized", 404));
   }
   const isMatch = await bcrypt.compare(password, userData.password);
 

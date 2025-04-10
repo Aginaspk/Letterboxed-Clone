@@ -7,6 +7,7 @@ import listReducer from "../redux/listsSlice.js";
 import newsReducer from "../redux/newsSlice.js";
 import membersReducer from "../redux/membersSlice.js";
 import seacrhReducer from "../redux/searchSlice.js";
+import adminFilmReducer from "../redux/admin/filmSlice.js";
 import { persistStore } from "redux-persist";
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
     news: newsReducer,
     members: membersReducer,
     search: seacrhReducer,
+    adminFilm: adminFilmReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
