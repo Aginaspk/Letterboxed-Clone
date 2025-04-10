@@ -20,6 +20,19 @@ export const getAllFilms = createAsyncThunk(
     }
   }
 );
+export const addFilm = createAsyncThunk(
+  "addFilm/films",
+  async (value, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post("/admin/add-movie",value);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 const adminFilmSlice = createSlice({
   name: "film",

@@ -21,6 +21,9 @@ import ViewReview from './pages/ViewReview.jsx'
 import AdminLogin from './auth/AdminLogin.jsx'
 import AdminHome from './pages/admin/AdminHome.jsx'
 import Movies from './pages/admin/Movies.jsx'
+import AdminLists from './pages/admin/AdminLists.jsx'
+import AdminMembers from './pages/admin/AdminMembers.jsx'
+import AdminReviews from './pages/admin/AdminReviews.jsx'
 
 
 const router = createBrowserRouter([
@@ -90,6 +93,18 @@ const router = createBrowserRouter([
       {
         index:true,
         element:<Movies/>
+      },
+      {
+        path:'lists',
+        element:<AdminLists/>
+      },
+      {
+        path:'members',
+        element:<AdminMembers/>
+      },
+      {
+        path:'reviews',
+        element:<AdminReviews/>
       }
     ]
   }
