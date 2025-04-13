@@ -27,11 +27,6 @@ function ReviewCard({item}) {
                 <div className='mb-[15px]'>
                     <p className='text-[16px]  text-[#99AABB] lora'>{item?.reviewText}</p>
                 </div>
-                <div className='flex'>
-                    <TiHeart size={20} className='text-[#778899] mr-1' />
-                    <p className='text-[13px] gra text-[#778899] font-semibold mr-3'>Like Review</p>
-                    <p className='text-[13px] gra text-[#778899]'>{item?.likes?.length} likes</p>
-                </div>
             </div>
         </div>
     )

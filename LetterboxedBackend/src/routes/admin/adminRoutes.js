@@ -5,6 +5,7 @@ import {
   addMovie,
   getAllFilms,
   getFilmById,
+  removeMovie,
   updateMovie,
 } from "../../controllers/admin/adminMovieController.js";
 import upload from "../../middlewares/multer.js";
@@ -48,6 +49,7 @@ routes
     ]),
     trycatch(updateMovie)
   )
+  .delete('/remove-film/:id',verifyAdmin,trycatch(removeMovie))
 
   .get("/get-members", verifyAdmin, trycatch(getAllUsers))
   .get("/getUserById/:id", verifyAdmin, trycatch(getUserById))

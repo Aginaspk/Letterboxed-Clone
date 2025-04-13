@@ -51,10 +51,11 @@ const addMovie = async (req, res, next) => {
   res.status(201).json({
     message: "Movie created successfully",
   });
-};
+}; 
 
 const updateMovie = async (req, res) => {
   const { id } = req.params;
+  console.log(req.files.bigPoster)
   const movie = await movieSchema.findById(id);
   if (!movie) {
     return next(new CustomError("Movie not found", 404));
@@ -70,10 +71,10 @@ const updateMovie = async (req, res) => {
       : movie.cast,
   };
 
-  if (req.files?.smallPoster) {
+  if (req.files.smallPoster?.[0].path) {
     updateData.smallPoster = req.files.smallPoster[0].path;
   }
-  if (req.files?.bigPoster) {
+  if (req.files.bigPoster?.[0].path) {
     updateData.bigPoster = req.files.bigPoster[0].path;
   }
 
@@ -89,4 +90,22 @@ const updateMovie = async (req, res) => {
   });
 };
 
-export { addMovie, updateMovie,getAllFilms,getFilmById };
+const removeMovie = async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return next(new CustomError("Invalid movie ID", 400));
+  }
+
+  const movie = await movieSchema.findById(id);
+  if (!movie) {
+    return next(new CustomError("Movie not found", 404));
+  }
+  await movieSchema.findByIdAndDelete(id);
+
+  res.status(200).json({
+    message: "Movie deleted successfully",
+  });
+};
+
+export { addMovie, updateMovie, getAllFilms, getFilmById,removeMovie };

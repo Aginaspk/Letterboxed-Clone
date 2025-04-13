@@ -3,6 +3,7 @@ import api from "../../api/api";
 
 const INITIAL_STATE = {
   films: {},
+  film:{},
   loading: false,
   error: null,
 };
@@ -20,11 +21,38 @@ export const getAllFilms = createAsyncThunk(
     }
   }
 );
+
 export const addFilm = createAsyncThunk(
   "addFilm/films",
   async (value, { rejectWithValue }) => {
     try {
       const { data } = await api.post("/admin/add-movie",value);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const updateFilm = createAsyncThunk(
+  "updateFilm/films",
+  async (credential, { rejectWithValue }) => {
+    try {
+      const { data } = await api.put(`/admin//updateMovie/${credential.id}`,credential.value);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const removeFilm = createAsyncThunk(
+  "removeFilm/films",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.delete(`/admin/remove-film/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -49,6 +77,9 @@ const adminFilmSlice = createSlice({
     builder.addCase(getAllFilms.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    })
+    builder.addCase(removeFilm.fulfilled, (state, action) => {
+      state.loading = false;
     });
   },
 });

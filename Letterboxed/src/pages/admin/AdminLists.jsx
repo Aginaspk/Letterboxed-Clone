@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllLists } from '../../redux/admin/adminlistSlice';
 import { Link } from 'react-router-dom';
 import PopCard from '../../components/lists/PopCard';
+import Lists from '../../components/admin/Lists';
 
 function AdminLists() {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function AdminLists() {
             </div>
             <div className='grid grid-cols-3'>
                 {lists?.data?.map((item) => {
-                    return <Link to={`/list/${item?._id}`}><div className={`w-[296px]`}><PopCard item={item} /></div></Link>
+                    return <Link to={`/list/${item?._id}`}><div className={`w-[296px]`}><Lists item={item} /></div></Link>
                 })}
             </div>
         </div>

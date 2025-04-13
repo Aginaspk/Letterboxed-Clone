@@ -97,7 +97,7 @@ function AddMovie({ isOpen, onClose }) {
                 <form method="dialog">
                     <button className="absolute right-3 top-5" onClick={onClose}><LuX className='text-[#99AABB] hover:text-white' size={30} /></button>
                 </form>
-                <div className='w-[900px] bg-[#445566]'>
+                <div className='w-[940px] px-[20px] bg-[#445566]'>
                     <div className='w-full py-[16px] px-[20px] border-b border-[#345] flex items-center'>
                         <PiTagSimpleFill size={30} className='rotate-180 text-[#AABBCC] mr-[14px] mt-[1px]' />
                         <span className='text-[18px] gra '>ADD</span>
@@ -169,8 +169,8 @@ function AddMovie({ isOpen, onClose }) {
                                 id="" />
                         </div>
                     </div>
-                    <div className='w-[900px] bg-[#334455] py-[16px] px-[20px]'>
-                        <div className='w-full flex justify-end px-[30px]'>
+                    <div className='w-[880px] bg-[#445566] mr-[20px] py-[16px] border-t border-[#345]'>
+                        <div className='w-full flex justify-end '>
                             <button onClick={handleSubmit} className='px-[12px] tracking-widest text-[13px] rounded-sm font-semibold py-[6px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>SAVE</button>
                         </div>
                     </div>

@@ -1,13 +1,14 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { LuX } from 'react-icons/lu'
 import { CiImageOn } from "react-icons/ci";
 import { PiTagSimpleFill } from 'react-icons/pi'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovieById } from '../../redux/movieSlice';
+import { updateFilm } from '../../redux/admin/filmSlice';
 
 function UpdateMovie({ isOpen, onClose }) {
-
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -23,7 +24,29 @@ function UpdateMovie({ isOpen, onClose }) {
     const [bigPoster, setBigPoster] = useState(null);
     const [smallPreview, setSmallPreview] = useState(null);
     const [bigPreview, setBigPreview] = useState(null);
+    const { movie } = useSelector(state => state.movies)
+    const { updateId } = useSelector(state => state.globState)
+    console.log(formData)
 
+    useEffect(() => {
+        dispatch(getMovieById(updateId))
+    }, [updateId])
+
+    useEffect(() => {
+        if (movie) {
+            setFormData({
+                title: movie?.data?.title || "",
+                description: movie?.data?.description || "",
+                releaseYear: movie?.data?.releaseYear || "",
+                genre: movie?.data?.genre?.join(',') || "",
+                cast: movie?.data?.cast?.join(',') || "",
+                director: movie?.data?.director || "",
+                smallDescription: movie?.data?.smallDescription || "",
+            });
+            setSmallPreview(movie?.data?.smallPoster)
+            setBigPreview(movie?.data?.bigPoster)
+        }
+    }, [movie])
 
     const onDropSmall = (acceptedFiles) => {
         if (acceptedFiles.length > 0) {
@@ -59,16 +82,7 @@ function UpdateMovie({ isOpen, onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!formData.title || !formData.releaseDate || !formData.genre) {
-            toast.error("Please fill all required fields.");
-            return;
-        }
-
-        if (!smallPoster || !bigPoster) {
-            toast.error("Please upload both small and big posters.");
-            return;
-        }
+        console.log(formData)
 
         const form = new FormData();
         for (let key in formData) {
@@ -78,15 +92,9 @@ function UpdateMovie({ isOpen, onClose }) {
         form.append("bigPoster", bigPoster);
 
         try {
-            const response = await axios.post("/api/movies", form); // Adjust URL to your endpoint
+            const response = await dispatch(updateFilm({id:updateId,value:formData})).unwrap() // Adjust URL to your endpoint
             toast.success("Movie created successfully");
-            closeTab();
-            // Reset form
-            setFormData({ title: "", releaseDate: "", genre: "", cast: "" });
-            setSmallPoster(null);
-            setBigPoster(null);
-            setSmallPreview(null);
-            setBigPreview(null);
+            onClose();
         } catch (err) {
             console.error(err);
             toast.error("Error creating movie");
@@ -110,6 +118,7 @@ function UpdateMovie({ isOpen, onClose }) {
                             <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                 type="text"
                                 name="title"
+                                value={formData.title}
                                 id="" />
                             <div className='flex justify-between w-full '>
                                 <div className='w-[220px]'>
@@ -117,6 +126,7 @@ function UpdateMovie({ isOpen, onClose }) {
                                     <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                         type="text"
                                         name="releaseYear"
+                                        value={formData.releaseYear}
                                         id="" />
                                 </div>
                                 <div className='w-[220px]'>
@@ -124,15 +134,17 @@ function UpdateMovie({ isOpen, onClose }) {
                                     <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                         type="text"
                                         name="director"
+                                        value={formData.director}
                                         id="" />
                                 </div>
                             </div>
                             <label htmlFor="" className='text-[13px] '>Description</label>
-                            <textarea onChange={handleChange} name="description" id="" className='w-full h-[106px] mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] shadow-[inset_0_-1px_#456]'></textarea>
+                            <textarea value={formData.description} onChange={handleChange} name="description" id="" className='w-full h-[106px] mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] shadow-[inset_0_-1px_#456]'></textarea>
                             <label htmlFor="" className='text-[13px] '>Genre</label>
                             <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                 type="text"
                                 name="genre"
+                                value={formData.genre}
                                 id="" />
 
 
@@ -162,13 +174,20 @@ function UpdateMovie({ isOpen, onClose }) {
                             <label htmlFor="" className='text-[13px] '>Small Description</label>
                             <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                 type="text"
+                                value={formData.smallDescription}
                                 name="smallDescription"
                                 id="" />
                             <label htmlFor="" className='text-[13px] '>Cast</label>
                             <input onChange={handleChange} className='w-full mb-1 mt-[5px] px-[9px] pt-[9px] pb-[8px] text-[#567] text-[14px] outline-0 focus:bg-white rounded-[3px] bg-[#2C3440] h-[36px] shadow-[inset_0_-1px_#456]'
                                 type="text"
                                 name="cast"
+                                value={formData.cast}
                                 id="" />
+                        </div>
+                    </div>
+                    <div className='w-[880px] bg-[#445566] mr-[20px] py-[16px] border-t border-[#345]'>
+                        <div className='w-full flex justify-end '>
+                            <button onClick={handleSubmit} className='px-[12px] tracking-widest text-[13px] rounded-sm font-semibold py-[6px] bg-[#00ac1c] hover:bg-[#009D1A] shadow-[inset_0_1px_0_hsla(0,0%,100%,0.3)] text-white gra'>SAVE</button>
                         </div>
                     </div>
                 </div>
