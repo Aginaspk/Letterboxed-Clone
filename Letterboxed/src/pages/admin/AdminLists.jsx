@@ -19,7 +19,7 @@ function AdminLists() {
             </div>
             <div className='grid grid-cols-3'>
                 {lists?.data?.map((item) => {
-                    return <Link to={`/list/${item?._id}`}><div className={`w-[296px]`}><Lists item={item} /></div></Link>
+                    return <div className={`w-[296px]`}><Lists item={item} /></div>
                 })}
             </div>
         </div>

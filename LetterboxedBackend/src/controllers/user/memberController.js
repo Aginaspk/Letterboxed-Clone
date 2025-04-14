@@ -140,7 +140,7 @@ const getPopMemberOfTheWeek = async (req, res) => {
 };
 
 const getAllMemebrs = async (req, res) => {
-  const members = await userSchema.find();
+  const members = await userSchema.find({isAdmin:false});
 
   res.status(200).json({
     data: members,

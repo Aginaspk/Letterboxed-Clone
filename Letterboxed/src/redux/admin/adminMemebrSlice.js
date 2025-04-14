@@ -2,16 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api/api";
 
 const INITIAL_STATE = {
-  reviews: {},
+  members: {},
   loading: false,
   error: null,
 };
 
-export const getAllReviews = createAsyncThunk(
-  "getAllReviews/review",
+export const getAllMemebrs = createAsyncThunk(
+  "getAllMemebrs/members",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await api.get("/admin/reviews");
+      const { data } = await api.get("/admin/get-members");
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -20,11 +20,11 @@ export const getAllReviews = createAsyncThunk(
     }
   }
 );
-export const removeAReview = createAsyncThunk(
-  "removeAReview/review",
+export const blockControll = createAsyncThunk(
+  "blockControll/members",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await api.delete(`/admin/remove-review/${id}`);
+      const { data } = await api.put(`/admin/block-user/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -34,23 +34,23 @@ export const removeAReview = createAsyncThunk(
   }
 );
 
-const adminReviewSlice = createSlice({
-  name: "review",
+const adminMemberSlice = createSlice({
+  name: "members",
   initialState: INITIAL_STATE,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllReviews.pending, (state, action) => {
+    builder.addCase(getAllMemebrs.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(getAllReviews.fulfilled, (state, action) => {
+    builder.addCase(getAllMemebrs.fulfilled, (state, action) => {
       state.loading = false;
-      state.reviews = action.payload;
+      state.members = action.payload;
     });
-    builder.addCase(getAllReviews.rejected, (state, action) => {
+    builder.addCase(getAllMemebrs.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
   },
 });
 
-export default adminReviewSlice.reducer;
+export default adminMemberSlice.reducer;

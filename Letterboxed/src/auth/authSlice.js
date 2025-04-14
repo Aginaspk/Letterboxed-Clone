@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   user: {},
   newPass: {},
   isAuth: false,
+  isAdmin:false,
   accessToken: null,
   loading: false,
   error: null,
@@ -40,7 +41,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 export const loginAdmin = createAsyncThunk(
-  "auth/loginUser",
+  "auth/loginAdmin",
   async (adminData, { rejectWithValue }) => {
     try {
       const { data } = await api.post("/authAdmin/loginAdmin", adminData);
@@ -126,6 +127,7 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.isAuth = true;
         state.user = action.payload.user;
+        state.isAdmin = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -155,9 +157,16 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuth = false;
         state.user = {};
+        state.isAdmin = false;
       })
       .addCase(logOutUser.rejected,(state,action)=>{
         state.error = action.payload;
+      })
+      .addCase(loginAdmin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.accessToken = action.payload.accessToken;
+        state.isAuth = true;
+        state.isAdmin = true;
       })
   },
 });
@@ -165,7 +174,7 @@ const authSlice = createSlice({
 const persistConfig = {
   key: "auth",
   storage,
-  whitelist: ["user", "isAuth"],
+  whitelist: ["user", "isAuth","isAdmin"],
 };
 
 export const { updateAccessToken } = authSlice.actions;

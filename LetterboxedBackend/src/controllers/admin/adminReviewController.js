@@ -29,4 +29,22 @@ const getRevByMovie = async (req, res) => {
   });
 };
 
-export { getAllReviews, getRevById, getRevByMovie, getRevByUser };
+const removeReview = async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return next(new CustomError("Invalid Review ID", 400));
+  }
+
+  const review = await reviewSchema.findById(id);
+  if (!review) {
+    return next(new CustomError("review not found", 404));
+  }
+  await reviewSchema.findByIdAndDelete(id);
+
+  res.status(200).json({
+    message: "review deleted successfully",
+  });
+};
+
+export { getAllReviews, getRevById, getRevByMovie, getRevByUser,removeReview };

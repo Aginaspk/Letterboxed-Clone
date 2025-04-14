@@ -2,11 +2,26 @@ import React from 'react'
 import PosterCard from '../PosterCard'
 import { TiHeart } from 'react-icons/ti'
 import { useNavigate } from 'react-router-dom'
+import { FaDeleteLeft } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
+import { getAllReviews, removeAReview } from '../../redux/admin/adminReviews';
+import toast from 'react-hot-toast';
 
 function ReviewCard({item}) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const deleteAReview = async()=>{
+        try {
+            const res = await dispatch(removeAReview(item._id)).unwrap();
+            toast.success("deleted")
+            dispatch(getAllReviews())
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
-        <div onClick={() => navigate(`/review/${item._id}`)} className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] gap-20'>
+        <div className='w-full border-b flex border-[#456]/50 pt-[15px] pb-[20px] gap-20'>
             <div className='w-[76px]'>
                 <div className='w-[76px] h-[111px]'>
                     <PosterCard item={item?.movie} />
@@ -27,6 +42,9 @@ function ReviewCard({item}) {
                 <div className='mb-[15px]'>
                     <p className='text-[16px]  text-[#99AABB] lora'>{item?.reviewText}</p>
                 </div>
+            </div>
+            <div className='w-[200px] flex justify-end'>
+                <FaDeleteLeft className='cursor-pointer' onClick={deleteAReview}/>
             </div>
         </div>
     )

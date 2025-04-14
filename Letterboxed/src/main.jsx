@@ -24,6 +24,7 @@ import Movies from './pages/admin/Movies.jsx'
 import AdminLists from './pages/admin/AdminLists.jsx'
 import AdminMembers from './pages/admin/AdminMembers.jsx'
 import AdminReviews from './pages/admin/AdminReviews.jsx'
+import Protected from '../utils/Protected.jsx'
 
 
 const router = createBrowserRouter([
@@ -36,40 +37,40 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path:'/filims',
-        element:<Filims/>
+        path: '/filims',
+        element: <Filims />
       },
       {
         path: '/reset-password/:token',
         element: <NewPass />
       },
       {
-        path:'/filims/:filim',
-        element:<ViewFilim/>
+        path: '/filims/:filim',
+        element: <ViewFilim />
       },
       {
-        path:'/lists',
-        element:<ListPage/>
+        path: '/lists',
+        element: <ListPage />
       },
       {
-        path:'/list/:listId',
-        element:<ViewList/>
+        path: '/list/:listId',
+        element: <ViewList />
       },
       {
-        path:'/members',
-        element:<Members/>
+        path: '/members',
+        element: <Members />
       },
       {
-        path:'/search/:searchText',
-        element:<SeacrhPage/>
+        path: '/search/:searchText',
+        element: <SeacrhPage />
       },
       {
-        path:'/new-list',
-        element:<CreateList/>
+        path: '/new-list',
+        element: <CreateList />
       },
       {
-        path:'/review/:id',
-        element:<ViewReview/>
+        path: '/review/:id',
+        element: <ViewReview />
       }
 
     ]
@@ -83,28 +84,33 @@ const router = createBrowserRouter([
     element: <ResetPass />
   },
   {
-    path:'/admin-login',
-    element:<AdminLogin/>
+    path: '/admin-login',
+    element: <AdminLogin />
   },
   {
-    path:'/admin-home',
-    element:<AdminHome/>,
+    element: <Protected />,
     children:[
       {
-        index:true,
-        element:<Movies/>
-      },
-      {
-        path:'lists',
-        element:<AdminLists/>
-      },
-      {
-        path:'members',
-        element:<AdminMembers/>
-      },
-      {
-        path:'reviews',
-        element:<AdminReviews/>
+        path: '/admin-home',
+        element: <AdminHome />,
+        children: [
+          {
+            index: true,
+            element: <Movies />
+          },
+          {
+            path: 'lists',
+            element: <AdminLists />
+          },
+          {
+            path: 'members',
+            element: <AdminMembers />
+          },
+          {
+            path: 'reviews',
+            element: <AdminReviews />
+          }
+        ]
       }
     ]
   }

@@ -19,6 +19,7 @@ import {
   getRevById,
   getRevByMovie,
   getRevByUser,
+  removeReview,
 } from "../../controllers/admin/adminReviewController.js";
 import {
   getALlLists,
@@ -59,6 +60,7 @@ routes
   .get("/review-by-id/:id", verifyAdmin, trycatch(getRevById))
   .get("/reviews-by-user/:id", verifyAdmin, trycatch(getRevByUser))
   .get("/reviews-by-movie/:id", verifyAdmin, trycatch(getRevByMovie))
+  .delete("/remove-review/:id", verifyAdmin, trycatch(removeReview))
 
   .get("/get-all-lists", verifyAdmin, trycatch(getALlLists))
   .get("/get-list-byId/:id", verifyAdmin, trycatch(getListById))

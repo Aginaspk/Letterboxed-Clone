@@ -10,6 +10,7 @@ import seacrhReducer from "../redux/searchSlice.js";
 import adminFilmReducer from "../redux/admin/filmSlice.js";
 import adminListReducer from "../redux/admin/adminlistSlice.js";
 import adminReviewReducer from "../redux/admin/adminReviews.js";
+import adminMemebrReducer from "../redux/admin/adminMemebrSlice.js";
 import { persistStore } from "redux-persist";
 
 export const store = configureStore({
@@ -25,6 +26,7 @@ export const store = configureStore({
     adminFilm: adminFilmReducer,
     adminList: adminListReducer,
     adminReview: adminReviewReducer,
+    adminMembers: adminMemebrReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
