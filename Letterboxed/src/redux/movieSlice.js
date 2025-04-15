@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   movies: {},
   oscars: {},
   movie: {},
+  watchlist:{},
   popMovies: {},
   intraById: {},
   loading: false,
@@ -135,6 +136,19 @@ export const getIntraById = createAsyncThunk(
     }
   }
 );
+export const getWatchlist = createAsyncThunk(
+  "movie/getWatchlist",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getWatchlist/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 const movieSlice = createSlice({
   name: "movie",
@@ -205,7 +219,18 @@ const movieSlice = createSlice({
       .addCase(getIntraById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getWatchlist.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getWatchlist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.watchlist = action.payload;
+      })
+      .addCase(getWatchlist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

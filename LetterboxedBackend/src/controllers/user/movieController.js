@@ -1,5 +1,6 @@
 import movieanduserSchema from "../../models/schema/movieanduserSchema.js";
 import movieSchema from "../../models/schema/movieSchema.js";
+import userSchema from "../../models/schema/userSchema.js";
 import CustomError from "../../utils/customeError.js";
 
 const getNewMovies = async (req, res) => {
@@ -311,10 +312,10 @@ const watchlistMovie = async (req, res, next) => {
 };
 
 const rateMovie = async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   const user = req.user;
   const movieId = req.body.movieId;
-  const {rating} = req.body;
+  const { rating } = req.body;
 
   if (!movieId || !user || !rating) {
     return next(new CustomError("no movie and user and rating found", 400));
@@ -378,6 +379,49 @@ const getIntraById = async (req, res, next) => {
   });
 };
 
+const getWatchlist = async (req, res) => {
+  const userId = req.params.id;
+
+  const watchlist = await movieanduserSchema
+    .find({
+      user: userId,
+      isInWatchlist: true,
+    })
+    .populate("movie", "title smallPoster releaseDate")
+    .select("movie isInWatchlist")
+    .lean();
+
+  res.status(200).json({
+    success: true,
+    data: watchlist,
+  });
+};
+export const getUserFavorites = async (req, res) => {
+  const userId = req.params.userId;
+
+
+  const user = await userSchema.findById(userId)
+    .populate({
+      path: "favorites",
+      select:
+        "title releaseYear genre director smallPoster bigPoster description smallDescription avgRating isOscar",
+    })
+    .select("favorites")
+    .lean();
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user.favorites || [], // Return favorites array (empty if none)
+  });
+};
+
 export {
   getNewMovies,
   getOscarsMovies,
@@ -387,5 +431,6 @@ export {
   watchMovie,
   getIntraById,
   watchlistMovie,
-  rateMovie
+  rateMovie,
+  getWatchlist,
 };

@@ -5,8 +5,10 @@ const INITIAL_STATE = {
   newReviews: {},
   popularReviews: {},
   avg:{},
+  review:{},
   popReviewById:{},
   reviewById:{},
+  activity:{},
   loading: false,
   error: null,
 };
@@ -105,6 +107,32 @@ export const addReviewComment = createAsyncThunk(
     }
   }
 );
+export const getAvtivity = createAsyncThunk(
+  "review/getAvtivity",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getActivity/${id}`,);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const getReview = createAsyncThunk(
+  "review/getReview",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getReview/${id}`,);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 
 
@@ -166,6 +194,28 @@ const reviewSlice = createSlice({
         state.reviewById = action.payload;
       })
       .addCase(getReviewById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getAvtivity.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAvtivity.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activity = action.payload;
+      })
+      .addCase(getAvtivity.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getReview.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getReview.fulfilled, (state, action) => {
+        state.loading = false;
+        state.review = action.payload;
+      })
+      .addCase(getReview.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

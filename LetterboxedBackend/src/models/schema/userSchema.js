@@ -11,6 +11,7 @@
       isBlocked: { type: Boolean, default: false },
       followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
       following: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+      favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "filims" }],
       resetPasswordToken: { type: String },
       resetPasswordExpires: { type: Date },
       isSixteen:{type:Boolean, required:true},

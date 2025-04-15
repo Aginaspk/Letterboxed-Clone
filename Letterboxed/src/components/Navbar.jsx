@@ -28,7 +28,7 @@ function Navbar() {
 
 
   const { isAuth, user } = useSelector(state => state.auth)
-  const paths = ["/reset-password/:token", "/filims", "/members", "lists", '/search/:searchText'];
+  const paths = ["/reset-password/:token", "/filims", "/members", "lists", '/search/:searchText','/user-profile','/settings'];
   const isReset = paths.some(path => matchPath(path, location.pathname));
   const home = ["/"];
   const isHome = home.some(path => matchPath(path, location.pathname));

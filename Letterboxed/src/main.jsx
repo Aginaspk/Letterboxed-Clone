@@ -25,6 +25,8 @@ import AdminLists from './pages/admin/AdminLists.jsx'
 import AdminMembers from './pages/admin/AdminMembers.jsx'
 import AdminReviews from './pages/admin/AdminReviews.jsx'
 import Protected from '../utils/Protected.jsx'
+import UserProfile from './pages/UserProfile.jsx'
+import AccSettings from './pages/AccSettings.jsx'
 
 
 const router = createBrowserRouter([
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: '/review/:id',
         element: <ViewReview />
+      },
+      {
+        path:'/user-profile',
+        element:<UserProfile/>
+      },
+      {
+        path:'/settings',
+        element:<AccSettings/>
       }
 
     ]

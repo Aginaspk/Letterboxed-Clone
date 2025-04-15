@@ -6,6 +6,7 @@ import {
   getNewMovies,
   getOscarsMovies,
   getPopOfTheWeek,
+  getWatchlist,
   likeMovie,
   rateMovie,
   watchlistMovie,
@@ -22,7 +23,7 @@ import {
 } from "../../controllers/user/reviewController.js";
 import { addCommentToList, createList, getListById, getPopOfWeek, getPopularLists, getRecentlyLiked, isUserLiked, likeALsit } from "../../controllers/user/listController.js";
 import { getNewNews } from "../../controllers/user/newsController.js";
-import { getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers, toggleFollowUser } from "../../controllers/user/memberController.js";
+import { getActivity, getAllMemebrs, getPopMemberOfTheWeek, getPopReviwers, getReview, getUser, toggleFollowUser, updateUser } from "../../controllers/user/memberController.js";
 import { verifyUser } from "../../middlewares/authentication.js";
 import { searchAllCollections, searchMovie } from "../../controllers/user/seacrhController.js";
 
@@ -35,7 +36,11 @@ routes
   .get("/popularReview", trycatch(getPopularOfTheWeek))
   .get("/popularLists", trycatch(getPopularLists))
   .get("/getNews", trycatch(getNewNews))
+  .get("/getUser/:id", trycatch(getUser))
   .get("/popularMovies", trycatch(getPopOfTheWeek))
+  .get("/getActivity/:id", trycatch(getActivity))
+  .get("/getReview/:id", trycatch(getReview))
+  .get("/getWatchlist/:id", trycatch(getWatchlist))
   .get("/movieById/:id", trycatch(getMovieById))
   .get("/avgRating/:id", trycatch(avgRatingAndCount))
   .get("/popReviewById/:id", trycatch(getPopReviewById))
@@ -49,6 +54,7 @@ routes
   .get('/seacrhMovie/:searchText',trycatch(searchMovie))
   .get('/getReview/:id',trycatch(getReviewById))
   .post('/likeMovie',verifyUser,trycatch(likeMovie))
+  .put('/updateUser/:id',verifyUser,trycatch(updateUser))
   .post('/getIntra',verifyUser,trycatch(getIntraById))
   .post('/watchMovie',verifyUser,trycatch(watchMovie))
   .post('/rateMovie',verifyUser,trycatch(rateMovie))

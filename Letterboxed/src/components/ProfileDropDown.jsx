@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { logOutUser } from '../auth/authSlice';
+import { Link } from 'react-router-dom';
 
 function ProfileDropDown({ user }) {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function ProfileDropDown({ user }) {
             <div className={`w-full rounded-b-sm absolute left-0 bg-[#8899AA]  border-[#2C3440]/15 overflow-hidden ${isHover ? "h-auto  border-t" : "h-0"}`}>
                 <div className='w-full py-1'>
                     <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Home</p></li>
-                    <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Profile</p></li>
+                    <Link to={'/user-profile'}><li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Profile</p></li></Link>
                     <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Filims</p></li>
                     <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Reviews</p></li>
                     <li className='border-t-[1px] border-transparent/10 tracking-wider hover:bg-[#667788] text-[#2C3440] hover:text-white graReg hover:font-medium text-[11px] py-[5px]'><p className=' px-[15px]'>Watchlist</p></li>

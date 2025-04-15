@@ -3,6 +3,7 @@ import api from "../api/api";
 
 const INITIAL_STATE = {
   members:{},
+  user:{},
   popReviwers:{},
   popOfWeek:{},
   loading: false,
@@ -48,6 +49,32 @@ export const getAllMembers = createAsyncThunk(
     }
   }
 );
+export const getUser = createAsyncThunk(
+  "members/getUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getUser/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
+export const getFavorites = createAsyncThunk(
+  "members/getFavorites",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get(`/user/getUser/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  }
+);
 
 const membersSlice = createSlice({
   name: "members",
@@ -77,14 +104,14 @@ const membersSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(getAllMembers.pending, (state, action) => {
+      .addCase(getUser.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(getAllMembers.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.members = action.payload;
+        state.user = action.payload;
       })
-      .addCase(getAllMembers.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

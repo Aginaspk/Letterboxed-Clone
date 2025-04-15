@@ -1,3 +1,6 @@
+import mongoose from "mongoose";
+import movieanduserSchema from "../../models/schema/movieanduserSchema.js";
+import reviewSchema from "../../models/schema/reviewSchema.js";
 import Review from "../../models/schema/reviewSchema.js";
 import userSchema from "../../models/schema/userSchema.js";
 import CustomError from "../../utils/customeError.js";
@@ -140,15 +143,15 @@ const getPopMemberOfTheWeek = async (req, res) => {
 };
 
 const getAllMemebrs = async (req, res) => {
-  const members = await userSchema.find({isAdmin:false});
+  const members = await userSchema.find({ isAdmin: false });
 
   res.status(200).json({
     data: members,
   });
 };
 
-const toggleFollowUser = async (req, res,next) => {
-  const { userId } = req.params; 
+const toggleFollowUser = async (req, res, next) => {
+  const { userId } = req.params;
   const currentUserId = req.user.id;
 
   if (userId === currentUserId) {
@@ -194,4 +197,95 @@ const toggleFollowUser = async (req, res,next) => {
   }
 };
 
-export { getPopReviwers, getPopMemberOfTheWeek, getAllMemebrs,toggleFollowUser };
+const getActivity = async (req, res, next) => {
+  const userId = req.params.id;
+
+  const activities = await movieanduserSchema
+    .find({ user: userId })
+    .sort({ updatedAt: -1 })
+    .limit(4)
+    .populate("movie", "title smallPoster releaseDate")
+    .select("watchedAt likedAt isInWatchlist rating updatedAt")
+    .lean();
+
+  res.status(200).json({
+    success: true,
+    data: activities,
+  });
+};
+const getReview = async (req, res, next) => {
+  const userId = req.params.id;
+
+  const reviews = await reviewSchema
+    .find({ user: userId })
+    .sort({ updatedAt: -1 })
+    .limit(4)
+    .populate("movie", "title smallPoster releaseDate")
+    .lean();
+
+  res.status(200).json({
+    success: true,
+    data: reviews,
+  });
+};
+const getUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  const user = await userSchema.findById(userId);
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+};
+
+const updateUser = async (req, res) => {
+  const userId = req.params.id;
+  const { userName, email, favorites } = req.body;
+
+
+
+  if (!userName && !email && !favorites) {
+    return res.status(400).json({
+      success: false,
+      message:
+        "At least one field (userName, email, or favorites) is required to update",
+    });
+  }
+ 
+  const updateData = {};
+  if (userName) updateData.userName = userName;
+  if (email) updateData.email = email;
+  if (favorites) updateData.favorites = favorites;
+
+  const updatedUser = await userSchema.findByIdAndUpdate(
+    userId,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  )
+    .select("userName email favorites")
+    .lean();
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: updatedUser,
+  });
+};
+
+export {
+  getPopReviwers,
+  getPopMemberOfTheWeek,
+  getAllMemebrs,
+  toggleFollowUser,
+  getActivity,
+  getReview,
+  getUser,
+  updateUser
+};
