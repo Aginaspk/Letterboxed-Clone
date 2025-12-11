@@ -30,7 +30,7 @@ function Intro() {
                 </div>
                 <button className='bg-[#00ac1c] gra px-6 h-[42px] rounded-sm text-[1.2rem] font-bold'>Get started — it‘s free!</button>
                 <div className='flex flex-col xl:flex-row gap-2 items-center  text-[17px] text-[#778899] tracking-wide'>
-                    <h1 className='gra'>The social network for film lovers.</h1>
+                    <h1 className='gra'>The social network for film loverss.</h1>
                     <div className='flex gra gap-0.5 '>
                         <h1>Also available on</h1>
                         <FaApple size={20} className='mb-2' />
